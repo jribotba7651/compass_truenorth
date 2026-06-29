@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Curio / Mapa del Deseo
 
-## Getting Started
+Plataforma web bilingüe (EN/ES) de **entretenimiento y autoexploración para adultos**. Ayuda a una persona, sola o en pareja, a explorar su curiosidad íntima, deseo, fantasías, límites y comunicación, y a traducir todo eso en lenguaje claro, seguro y conversable.
 
-First, run the development server:
+> **Qué NO es.** No es un servicio de salud. No diagnostica. No da consejo médico ni psicológico. No sustituye terapia. El marco siempre es curiosidad y conversación, nunca evaluación clínica de una persona.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Dos áreas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Explorar solo/a.** Autoconocimiento individual. Corre **local-only**: las respuestas viven en el navegador, nunca tocan el servidor.
+2. **Explorar en pareja.** Dos adultos comparan zonas comunes, zonas de conversación y límites. Cada persona decide qué comparte. El servidor guarda lo mínimo (scores por dimensión y permisos), nunca el texto de las respuestas.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## One-liner
 
-## Learn More
+- EN: Discover your intimate curiosity style in 2 minutes.
+- ES: Descubre tu estilo de curiosidad íntima en 2 minutos.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Frontend: Next.js, React, TypeScript
+- UI: Tailwind CSS + shadcn/ui
+- Backend: Next.js server actions / API routes
+- DB: Supabase Postgres (solo lo permitido por las reglas de privacidad)
+- Auth: Supabase Auth (login opcional al inicio)
+- Validación: Zod
+- Tests: Vitest (unit) + Playwright (e2e)
+- Deploy: Vercel
+- Analytics: Plausible o PostHog, privacy-first
+- Errores: Sentry, sin payloads sensibles
+- Pagos (futuro): Stripe, sujeto a confirmar elegibilidad de contenido adulto
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Reglas que gobiernan este repo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Todas las reglas duras viven en [`AGENTS.md`](./AGENTS.md). Cualquier agente de IA o persona que trabaje en este repo las lee primero. Si una decisión de implementación contradice una regla de `AGENTS.md`, gana la regla.
+
+Resumen de los no-negociables:
+
+- Producto 18+. Age gate y consentimiento antes de cualquier pregunta.
+- Modo individual local-only. Modo pareja: servidor mínimo, sin texto de respuestas.
+- Ningún texto de respuesta llega a analytics, logs ni Sentry.
+- El producto separa fantasía / curiosidad / deseo real / límite firme. Un límite firme nunca se sugiere como exploración.
+- Modo pareja anti-coerción: ninguna zona implica permiso ni obligación; lo privado nunca aparece en el reporte.
+- Ética comercial: sin vergüenza, sin ansiedad artificial, sin dark patterns. Compartir y comprar siempre desacoplados.
+- Tono de entretenimiento, nunca clínico ni de diagnóstico.
+
+---
+
+## Estado
+
+Pre-Etapa 0. Antes de recoger respuestas reales de usuarios, este proyecto requiere: decisión de entidad legal, confirmación de elegibilidad de pagos, y revisión de privacidad sobre datos sensibles. Ver Sección 11 del plan en Notion.
+
+## Plan completo
+
+El roadmap por etapas, modelo del quiz, modelo comercial y estrategia bilingüe viven en Notion: "Curio / Mapa del Deseo - Plan de Desarrollo".
