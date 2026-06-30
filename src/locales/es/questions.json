@@ -1,0 +1,15 @@
+{
+  "_README": "Texto de preguntas Q001-Q010. Solo texto, separado del scoring a proposito: cambiar idioma nunca cambia el resultado. El scoring vive en src/data/questions-scoring.json y se une por id.",
+  "questions": {
+    "Q001": "Cuando piensas en una experiencia íntima nueva, ¿qué suele llamar más tu atención primero?",
+    "Q002": "¿Qué tan importante es para ti sentir confianza antes de explorar una curiosidad íntima?",
+    "Q003": "Cuando algo te da curiosidad, ¿prefieres hablarlo primero o descubrirlo poco a poco?",
+    "Q004": "¿Qué tan cómodo/a te sientes diciendo \"no\" o \"todavía no\" en una conversación íntima?",
+    "Q005": "¿Qué tan atractivo te resulta crear un ambiente especial antes de una experiencia íntima?",
+    "Q006": "¿Qué tan fuerte respondes a detalles visuales como estilo, ropa, presencia o actitud?",
+    "Q007": "¿Qué tan importante es el tacto suave, la textura o la cercanía física en tu curiosidad íntima?",
+    "Q008": "¿Te atrae más una experiencia espontánea o una experiencia planeada con intención?",
+    "Q009": "¿Qué tan importante es sentirte deseado/a para que aumente tu curiosidad?",
+    "Q010": "¿Qué tan cómodo/a te sientes hablando de una fantasía sin sentir que estás obligado/a a realizarla?"
+  }
+}

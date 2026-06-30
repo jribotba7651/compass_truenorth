@@ -20,6 +20,14 @@
   "_pendiente_para_codex": "Las entradas marcadas con \"verified\": true fueron confirmadas leyendo Notion. Las demas preguntas del banco (el banco llega al menos a Q037) deben anadirse aqui al exportar desde Notion, siguiendo el mismo patron. Para cada una: leer su Dimension e Intent en Notion, asignar capa (dimension/safety/meta), topic, y polarity. Regla rapida: Dimension 'Limites' => capa safety. Preguntas que activan ajustes (private-by-default, poder saltar) => capa meta. Dimension 'Privacidad' => casi siempre meta o safety, rara vez dimension. Todo lo demas => capa dimension, polarity normal, salvo reserva explicita.",
 
   "questions": {
+    "Q001": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "novedad",
+      "topic": "novedad",
+      "polarity": "normal",
+      "note": "Apertura a novedad intima. Ancla la dimension novedad."
+    },
     "Q002": {
       "verified": true,
       "layer": "dimension",
@@ -27,6 +35,70 @@
       "topic": "confianza",
       "polarity": "normal",
       "note": "Alta respuesta sube Emocional y Comunicacion."
+    },
+    "Q003": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "comunicacion",
+      "polarity": "normal",
+      "note": "Estilo de procesamiento: hablar vs descubrir. Ancla la dimension comunicacion."
+    },
+    "Q004": {
+      "verified": true,
+      "layer": "safety",
+      "dimension": null,
+      "topic": "limites",
+      "polarity": "normal",
+      "note": "Comodidad diciendo no. Informa gradualidad y defaults. No entra al calculo de las 8 dimensiones."
+    },
+    "Q005": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "sensorial",
+      "topic": "ambiente",
+      "polarity": "normal",
+      "note": "Sensorial via ambiente. Contribuye a la dimension sensorial."
+    },
+    "Q006": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "visual",
+      "topic": "visual",
+      "polarity": "normal",
+      "note": "Respuesta a estimulos visuales. Ancla la dimension visual."
+    },
+    "Q007": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "sensorial",
+      "topic": "tacto",
+      "polarity": "normal",
+      "note": "Sensorial via tacto y cercania fisica."
+    },
+    "Q008": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "novedad",
+      "topic": "espontaneidad",
+      "polarity": "normal",
+      "note": "Preferencia espontaneidad vs planeacion. Sub-eje de la dimension novedad."
+    },
+    "Q009": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "validacion",
+      "topic": "validacion",
+      "polarity": "normal",
+      "note": "Importancia de sentirse deseado. Ancla la dimension validacion."
+    },
+    "Q010": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "fantasia_sin_accion",
+      "polarity": "normal",
+      "note": "Comodidad hablando de fantasia sin compromiso de actuar. Regla 1.5: fantasia nunca suma intencion."
     },
     "Q014": {
       "verified": true,
