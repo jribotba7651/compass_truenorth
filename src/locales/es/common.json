@@ -1,0 +1,56 @@
+{
+  "landing": {
+    "eyebrow": "Curio / Mapa del Deseo",
+    "headline": "Descubre tu estilo de curiosidad íntima en 2 minutos.",
+    "subhead": "Un espacio de entretenimiento y autoexploración para adultos, diseñado para convertir respuestas privadas en lenguaje claro y conversable.",
+    "cta_start": "Empezar",
+    "cta_principles": "Ver principios",
+    "principles_aria": "Principios de Curio",
+    "principle_1_title": "Curiosidad, no diagnóstico",
+    "principle_1_body": "Curio no es salud ni consejo médico o psicológico. El marco es curiosidad y conversación adulta.",
+    "principle_2_title": "Privado por diseño",
+    "principle_2_body": "El modo individual está diseñado como local-only: las respuestas viven en el navegador y no se envían al servidor.",
+    "principle_3_title": "Consentimiento primero",
+    "principle_3_body": "Nadie avanza sin confirmar 18+ y aceptar responder voluntariamente. Compartir siempre será una decisión separada."
+  },
+  "age": {
+    "step": "Paso 1 de 2",
+    "heading": "Confirma que tienes 18+",
+    "description": "Curio es solo para adultos. Antes de continuar, necesitamos tu confirmación explícita de edad.",
+    "checkbox": "Confirmo que tengo 18 años o más.",
+    "hint_before": "Confirma tu edad para continuar.",
+    "hint_after": "Edad confirmada para continuar al consentimiento.",
+    "back": "Volver",
+    "continue": "Continuar"
+  },
+  "consent": {
+    "step": "Paso 2 de 2",
+    "heading": "Consentimiento antes de responder",
+    "description": "Responder en Curio debe ser una decisión adulta, voluntaria y privada. Marca cada punto para continuar.",
+    "items": {
+      "adultEntertainment": "Entiendo que Curio es entretenimiento y autoexploración para adultos; no es salud, diagnóstico ni consejo médico o psicológico.",
+      "voluntaryAnswers": "Acepto responder de forma voluntaria y puedo pausar, salir o no contestar cuando quiera.",
+      "localOnly": "Entiendo que el modo individual es local-only: mis respuestas no se envían al servidor en este flujo.",
+      "separateSharing": "Entiendo que compartir resultados requiere un consentimiento separado y nunca se condiciona a comprar."
+    },
+    "hint_before": "Necesitas aceptar todos los puntos antes de contestar.",
+    "hint_after": "Consentimiento explícito completo.",
+    "back": "Volver",
+    "continue": "Acepto y continúo"
+  },
+  "ready": {
+    "eyebrow": "Consentimiento listo",
+    "heading": "Ya puedes explorar con calma.",
+    "description": "No se ha guardado nada. Cuando empiece el quiz, tus respuestas individuales se quedan en tu navegador.",
+    "restart": "Volver al inicio"
+  },
+  "footer": {
+    "disclaimer": "Curio es entretenimiento y autoexploración para adultos. No es salud, diagnóstico ni consejo médico o psicológico.",
+    "clear_data": "Borrar datos"
+  },
+  "lang_selector": {
+    "label": "Idioma",
+    "en": "EN",
+    "es": "ES"
+  }
+}
