@@ -94,6 +94,14 @@ Si rompes una regla, el test correspondiente debe fallar y el cambio no mergea. 
 
 Estas notas conviven con las reglas duras de arriba. Si una nota técnica entra en conflicto con una regla de producto (1.1 a 1.9), gana la regla de producto.
 
+### i18n (EN-US / ES-Latino neutro)
+
+- Los archivos de traducción viven en `src/locales/{en,es}/common.json`. No hay más locales por ahora.
+- El contexto y el hook están en `src/lib/i18n.tsx` (`LangProvider`, `useI18n`, `LanguageSelector`). El `localStorage` de preferencia de idioma vive ahí — no en los archivos de app, para no romper los scans de regla-1.3.
+- **Claves:** estructura de objeto anidado por pantalla, en snake_case: `landing.headline`, `consent.items.localOnly`, `footer.clear_data`. El separador es `.`; se accede con `t("pantalla.clave")`.
+- El copy no es traducción literal: EN-US usa tono directo/casual, ES usa español latino neutro con acentos completos.
+- Al agregar texto nuevo: añadir la clave en ambos JSON antes de usarla en el TSX.
+
 - **Next.js 16 (App Router, Turbopack).** Tiene breaking changes respecto a versiones anteriores. Antes de escribir código de Next, consulta la documentación de la versión instalada en `node_modules/next/dist/docs/`.
 - **Stack confirmado.** Next.js 16 + React 19 + TypeScript 5 + Tailwind v4. Supabase para el modo pareja únicamente (scores y permisos, nunca el texto de respuestas, ver Regla 1.3).
 - **Node.** Algunas dependencias piden Node >= 20.19.0. El warning EBADENGINE no es bloqueante.
