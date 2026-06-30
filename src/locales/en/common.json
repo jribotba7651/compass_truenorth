@@ -42,7 +42,64 @@
     "eyebrow": "Consent complete",
     "heading": "You're all set to explore.",
     "description": "Nothing has been saved. When the quiz starts, your individual answers stay in your browser.",
+    "start_quiz": "Start quiz",
     "restart": "Back to start"
+  },
+  "quiz": {
+    "progress": "Question {{current}} of {{total}}",
+    "options_legend": "Choose an option",
+    "back": "Previous",
+    "next": "Next",
+    "finish": "See results",
+    "options": {
+      "firm_boundary": "Hard limit",
+      "not_now": "Not right now",
+      "fantasy_only": "In fantasy only",
+      "curious": "I'm curious about it",
+      "talk_first": "Talk it through first",
+      "with_trust": "With the right trust",
+      "interested": "I'd like to explore it",
+      "skip": "Prefer not to answer"
+    }
+  },
+  "results": {
+    "eyebrow": "Results",
+    "heading": "Your curiosity profile",
+    "disclaimer": "This is an entertainment result, not a psychological diagnosis or medical advice. These ranges are an invitation to conversation, not absolute truth.",
+    "section_axes": "Global axes",
+    "curiosidad_label": "Curiosity",
+    "intencion_label": "Intention",
+    "section_dimensions": "Explored dimensions",
+    "section_limits": "Personal limits",
+    "limits_explanation": "You marked these topics as a hard limit. They will not appear as recommendations.",
+    "no_dimensions": "No dimensions with enough data.",
+    "no_limits": "You didn't mark any hard limits.",
+    "restart": "Start over"
+  },
+  "dimensions": {
+    "visual": "Visual",
+    "sensorial": "Sensory",
+    "emocional": "Emotional",
+    "fantasia_narrativa": "Narrative fantasy",
+    "novedad": "Novelty",
+    "validacion": "Validation",
+    "poder_consensuado": "Consensual power",
+    "comunicacion": "Communication"
+  },
+  "topics": {
+    "novedad": "Novelty",
+    "confianza": "Trust",
+    "comunicacion": "Communication",
+    "limites": "Boundaries",
+    "ambiente": "Sensory setting",
+    "visual": "Visual",
+    "tacto": "Touch",
+    "espontaneidad": "Spontaneity",
+    "validacion": "Validation",
+    "fantasia_sin_accion": "Fantasy without action",
+    "poder_consensuado": "Consensual power",
+    "privacidad": "Privacy",
+    "control_pausa": "Control and pause"
   },
   "footer": {
     "disclaimer": "Curio is adult entertainment and self-exploration. Not health care, diagnosis, or medical or psychological advice.",

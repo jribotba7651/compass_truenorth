@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import type { ReactNode } from "react";
@@ -26,27 +25,29 @@ function getNestedValue(obj: unknown, keys: string[]): string {
   return typeof current === "string" ? current : keys.join(".");
 }
 
+// Lazy initializer — runs only on the client since this is a "use client" tree.
+// typeof window guard keeps SSR safe (server renders with "es" default).
+function readStoredLocale(): Locale {
+  if (typeof window === "undefined") return "es";
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored === "en" || stored === "es") return stored;
+  } catch {
+    // Storage unavailable — keep default
+  }
+  return "es";
+}
+
 interface I18nContextValue {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: (key: string) => string;
+  t: (key: string, params?: Record<string, string | number>) => string;
 }
 
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("es");
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored === "en" || stored === "es") {
-        setLocaleState(stored);
-      }
-    } catch {
-      // Storage unavailable — keep default
-    }
-  }, []);
+  const [locale, setLocaleState] = useState<Locale>(readStoredLocale);
 
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);
@@ -58,8 +59,16 @@ export function LangProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const t = useCallback(
-    (key: string): string =>
-      getNestedValue(dictionaries[locale], key.split(".")),
+    (key: string, params?: Record<string, string | number>): string => {
+      let result = getNestedValue(dictionaries[locale], key.split("."));
+      if (params) {
+        result = result.replace(
+          /\{\{(\w+)\}\}/g,
+          (_, k) => String(params[k] ?? ""),
+        );
+      }
+      return result;
+    },
     [locale],
   );
 
