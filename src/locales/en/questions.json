@@ -1,5 +1,5 @@
 {
-  "_README": "Question text for Q001-Q010. Text only — scoring lives in src/data/questions-scoring.json and is joined by id. Switching locale never changes scoring results.",
+  "_README": "Question text for Q001-Q020. Text only - scoring lives in src/data/questions-scoring.json and is joined by id. Switching locale never changes scoring results.",
   "questions": {
     "Q001": "When a new intimate experience comes to mind, what tends to catch your attention first?",
     "Q002": "How much does trust matter to you before exploring an intimate curiosity?",
@@ -10,6 +10,16 @@
     "Q007": "How important are gentle touch, texture, or physical closeness to your intimate curiosity?",
     "Q008": "Are you drawn more to a spontaneous experience or one planned with intention?",
     "Q009": "How much does feeling desired increase your curiosity?",
-    "Q010": "How comfortable are you talking about a fantasy without feeling you have to act on it?"
+    "Q010": "How comfortable are you talking about a fantasy without feeling you have to act on it?",
+    "Q011": "Are you drawn to fantasies that play out like a story, a scene, or an imagined game?",
+    "Q012": "How appealing is it to bring out a more playful side of yourself in intimacy?",
+    "Q013": "How much does tenderness and care afterward matter to you in an intimate experience?",
+    "Q014": "How curious are you about dynamics where one person leads and the other follows, always with clear agreement?",
+    "Q015": "How important is having a word, signal, or agreement to pause an experience?",
+    "Q016": "How private are you with your intimate curiosities?",
+    "Q017": "Would you prefer your results stay just for you, even when using couple mode?",
+    "Q018": "How comfortable are you sharing curiosities if you can choose exactly what gets shared?",
+    "Q019": "Would you like the app to suggest conversation topics without revealing private details?",
+    "Q020": "How useful would it be to see where your curiosity and your partner's overlap?"
   }
 }

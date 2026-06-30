@@ -1,5 +1,5 @@
 {
-  "_README": "Texto de preguntas Q001-Q010. Solo texto, separado del scoring a proposito: cambiar idioma nunca cambia el resultado. El scoring vive en src/data/questions-scoring.json y se une por id.",
+  "_README": "Texto de preguntas Q001-Q020. Solo texto, separado del scoring a proposito: cambiar idioma nunca cambia el resultado. El scoring vive en src/data/questions-scoring.json y se une por id.",
   "questions": {
     "Q001": "Cuando piensas en una experiencia íntima nueva, ¿qué suele llamar más tu atención primero?",
     "Q002": "¿Qué tan importante es para ti sentir confianza antes de explorar una curiosidad íntima?",
@@ -10,6 +10,16 @@
     "Q007": "¿Qué tan importante es el tacto suave, la textura o la cercanía física en tu curiosidad íntima?",
     "Q008": "¿Te atrae más una experiencia espontánea o una experiencia planeada con intención?",
     "Q009": "¿Qué tan importante es sentirte deseado/a para que aumente tu curiosidad?",
-    "Q010": "¿Qué tan cómodo/a te sientes hablando de una fantasía sin sentir que estás obligado/a a realizarla?"
+    "Q010": "¿Qué tan cómodo/a te sientes hablando de una fantasía sin sentir que estás obligado/a a realizarla?",
+    "Q011": "¿Te interesa explorar fantasías que funcionen más como historia, escena o juego imaginado?",
+    "Q012": "¿Qué tan atractivo te resulta probar una versión más juguetona de ti en la intimidad?",
+    "Q013": "¿Qué tan importante es que una experiencia íntima tenga ternura y cuidado después?",
+    "Q014": "¿Qué tan curioso/a eres con dinámicas donde una persona guía y la otra se deja guiar, siempre con acuerdo claro?",
+    "Q015": "¿Qué tan importante es tener una palabra, señal o acuerdo para pausar una experiencia?",
+    "Q016": "¿Qué tan privado/a eres con tus curiosidades íntimas?",
+    "Q017": "¿Preferirías que tus resultados sean solo para ti, aunque uses el modo pareja?",
+    "Q018": "¿Qué tan cómodo/a te sientes compartiendo curiosidades si puedes elegir exactamente qué se comparte?",
+    "Q019": "¿Te gustaría que la app sugiera temas de conversación sin revelar detalles privados?",
+    "Q020": "¿Qué tan útil sería ver coincidencias de curiosidad entre tú y tu pareja?"
   }
 }
