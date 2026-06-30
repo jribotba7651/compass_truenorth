@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { loadQuestions } from "@/lib/questions";
@@ -45,11 +45,18 @@ async function moveToQuiz() {
   return user;
 }
 
-async function skipAllAndFinish(user: ReturnType<typeof userEvent.setup>) {
-  const nextButtons = () =>
-    screen.queryAllByRole("button", { name: /siguiente|next|ver resultados|see results/i });
-  while (nextButtons().length > 0) {
-    await user.click(nextButtons()[0]);
+function getQuizNextButton() {
+  return Array.from(document.querySelectorAll("button")).find((button) =>
+    /siguiente|next|ver resultados|see results/i.test(button.textContent ?? ""),
+  ) as HTMLButtonElement | undefined;
+}
+
+async function skipAllAndFinish(_user: ReturnType<typeof userEvent.setup>) {
+  void _user;
+  let nextButton = getQuizNextButton();
+  while (nextButton) {
+    fireEvent.click(nextButton);
+    nextButton = getQuizNextButton();
   }
 }
 
@@ -91,18 +98,18 @@ describe("rule-1.3-quiz-answers-never-leave-client", () => {
 // ---------------------------------------------------------------------------
 
 describe("quiz progress", () => {
-  it("shows question 1 of 30 on the first question", async () => {
+  it("shows question 1 of 60 on the first question", async () => {
     await moveToQuiz();
     expect(
       screen.getByRole("progressbar", { hidden: false }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/pregunta 1 de 30|question 1 of 30/i)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 1 de 60|question 1 of 60/i)).toBeInTheDocument();
   });
 
   it("advances the counter when moving to next question", async () => {
     const user = await moveToQuiz();
     await user.click(screen.getByRole("button", { name: /siguiente|next/i }));
-    expect(screen.getByText(/pregunta 2 de 30|question 2 of 30/i)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 2 de 60|question 2 of 60/i)).toBeInTheDocument();
   });
 });
 
@@ -331,12 +338,12 @@ describe("language-switch-mid-quiz-preserves-answers", () => {
   it("switching locale updates question text but keeps question index", async () => {
     const user = await moveToQuiz();
     await user.click(screen.getByRole("button", { name: /siguiente|next/i }));
-    expect(screen.getByText(/pregunta 2 de 30/i)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 2 de 60/i)).toBeInTheDocument();
 
     const langGroup = screen.getByRole("group", { name: /language|idioma/i });
     await user.click(within(langGroup).getByRole("button", { name: /^en$/i }));
 
-    expect(screen.getByText(/question 2 of 30/i)).toBeInTheDocument();
+    expect(screen.getByText(/question 2 of 60/i)).toBeInTheDocument();
   });
 });
 

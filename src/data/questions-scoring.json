@@ -19,7 +19,7 @@
     "normal": "Mas acuerdo = mas apertura. El 95% de las preguntas.",
     "inverse": "Mas acuerdo = menos apertura. Solo preguntas de reserva/privacidad. El motor voltea el mapeo, no los pesos."
   },
-  "_pendiente_para_codex": "Las entradas marcadas con \"verified\": true fueron confirmadas leyendo Notion. Las demas preguntas del banco (el banco llega al menos a Q037) deben anadirse aqui al exportar desde Notion, siguiendo el mismo patron. Para cada una: leer su Dimension e Intent en Notion, asignar capa (dimension/safety/meta), topic, y polarity. Regla rapida: Dimension 'Limites' => capa safety. Preguntas que activan ajustes (private-by-default, poder saltar) => capa meta. Dimension 'Privacidad' => casi siempre meta o safety, rara vez dimension. Todo lo demas => capa dimension, polarity normal, salvo reserva explicita.",
+  "_pendiente_para_codex": "Banco completo Q001-Q060. Mantener la separacion texto/scoring; solo layer=dimension alimenta el perfil. Las capas safety/meta quedan fuera del perfil, y orientacion permanece en meta por Regla 1.4.",
   "questions": {
     "Q001": {
       "verified": true,
@@ -280,6 +280,216 @@
       "polarity": "normal",
       "riskLevel": "Low",
       "note": "Importancia de validacion sin burla ni juicio. Contribuye a validacion."
+    },
+    "Q031": {
+      "layer": "dimension",
+      "dimension": "validacion",
+      "topic": "validacion",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q032": {
+      "layer": "dimension",
+      "dimension": "visual",
+      "topic": "estetica",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q033": {
+      "layer": "dimension",
+      "dimension": "sensorial",
+      "topic": "sonido",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q034": {
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "directo",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q035": {
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "pedir",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q036": {
+      "layer": "dimension",
+      "dimension": "novedad",
+      "topic": "sorpresa",
+      "polarity": "normal",
+      "riskLevel": "Medium"
+    },
+    "Q037": {
+      "layer": "safety",
+      "dimension": null,
+      "topic": "control_pausa",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q038": {
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "aftercare",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q039": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "orientacion",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q040": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "orientacion",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q041": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "orientacion",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q042": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "orientacion",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q043": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "orientacion",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q044": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "privacidad",
+      "polarity": "inverse",
+      "riskLevel": "Medium"
+    },
+    "Q045": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "lenguaje",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q046": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "formato_quiz",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q047": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "skip",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q048": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "ideas_conversacion",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q049": {
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "vocabulario",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q050": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "lenguaje_resultado",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q051": {
+      "layer": "dimension",
+      "dimension": "emocional",
+      "topic": "ritmo",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q052": {
+      "layer": "safety",
+      "dimension": null,
+      "topic": "anti_coercion",
+      "polarity": "normal",
+      "riskLevel": "Medium"
+    },
+    "Q053": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "frases_conversacion",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q054": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "privacidad_pareja",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q055": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "privacidad_pareja",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q056": {
+      "layer": "dimension",
+      "dimension": "novedad",
+      "topic": "coincidencias",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q057": {
+      "layer": "safety",
+      "dimension": null,
+      "topic": "limites",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q058": {
+      "layer": "dimension",
+      "dimension": "emocional",
+      "topic": "ligereza",
+      "polarity": "normal",
+      "riskLevel": "Low"
+    },
+    "Q059": {
+      "layer": "safety",
+      "dimension": null,
+      "topic": "distinguir_deseo",
+      "polarity": "normal",
+      "riskLevel": "Medium"
+    },
+    "Q060": {
+      "layer": "meta",
+      "dimension": null,
+      "topic": "formato_reporte",
+      "polarity": "normal",
+      "riskLevel": "Low"
     }
   }
 }

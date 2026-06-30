@@ -6,7 +6,7 @@ import { loadQuestions } from "@/lib/questions";
 import { computeScore } from "@/lib/scoring";
 import type { Answer } from "@/lib/scoring";
 
-const expectedIds = Array.from({ length: 30 }, (_, index) =>
+const expectedIds = Array.from({ length: 60 }, (_, index) =>
   "Q" + String(index + 1).padStart(3, "0"),
 );
 const esIds = Object.keys(esQuestions.questions);
@@ -26,9 +26,21 @@ type ScoringForTest = Record<
 >;
 
 const scoring = scoringData.questions as ScoringForTest;
+const safetyIds = [
+  "Q004",
+  "Q015",
+  "Q021",
+  "Q025",
+  "Q028",
+  "Q037",
+  "Q052",
+  "Q057",
+  "Q059",
+];
+const orientationIds = ["Q039", "Q040", "Q041", "Q042", "Q043"];
 
 describe("questions data integrity", () => {
-  it("es/questions.json, en/questions.json, and questions-scoring.json expose exactly Q001-Q030", () => {
+  it("es/questions.json, en/questions.json, and questions-scoring.json expose exactly Q001-Q060", () => {
     expect(sortIds(esIds)).toEqual(expectedIds);
     expect(sortIds(enIds)).toEqual(expectedIds);
     expect(sortIds(scoringIds)).toEqual(expectedIds);
@@ -43,8 +55,8 @@ describe("questions data integrity", () => {
     expect(missing).toEqual([]);
   });
 
-  it("Q004, Q015, Q021, Q025, and Q028 are layer safety and have null dimension", () => {
-    for (const id of ["Q004", "Q015", "Q021", "Q025", "Q028"]) {
+  it("all safety questions are layer safety and have null dimension", () => {
+    for (const id of safetyIds) {
       expect(scoring[id].layer).toBe("safety");
       expect(scoring[id].dimension).toBeNull();
     }
@@ -69,8 +81,8 @@ describe("questions data integrity", () => {
     }
   });
 
-  it("Q016 and Q017 are inverse polarity meta questions", () => {
-    for (const id of ["Q016", "Q017"]) {
+  it("Q016, Q017, and Q044 are inverse polarity meta questions", () => {
+    for (const id of ["Q016", "Q017", "Q044"]) {
       expect(scoring[id].layer).toBe("meta");
       expect(scoring[id].polarity).toBe("inverse");
       expect(scoring[id].dimension).toBeNull();
@@ -78,9 +90,25 @@ describe("questions data integrity", () => {
   });
 
   it("Q021-Q030 are all normal polarity", () => {
-    for (const id of expectedIds.slice(20)) {
+    for (const id of expectedIds.slice(20, 30)) {
       expect(scoring[id].polarity).toBe("normal");
     }
+  });
+
+  it("rule-1.4-orientacion-topic-is-meta-only-and-not-profile-dimension", () => {
+    const ids = expectedIds.filter((id) => scoring[id].topic === "orientacion");
+    expect(ids).toEqual(orientationIds);
+    for (const id of ids) {
+      expect(scoring[id].layer).toBe("meta");
+      expect(scoring[id].dimension).toBeNull();
+    }
+  });
+
+  it("no question with topic orientacion feeds a dimension", () => {
+    const invalid = expectedIds.filter(
+      (id) => scoring[id].topic === "orientacion" && scoring[id].layer === "dimension",
+    );
+    expect(invalid).toEqual([]);
   });
 
   it("layer=dimension entries have dimensions and safety/meta entries do not", () => {
@@ -94,7 +122,7 @@ describe("questions data integrity", () => {
     }
   });
 
-  it("Q011-Q030 include riskLevel metadata", () => {
+  it("Q011-Q060 include riskLevel metadata", () => {
     for (const id of expectedIds.slice(10)) {
       expect(["Low", "Medium", "High"]).toContain(scoring[id].riskLevel);
     }
@@ -111,9 +139,9 @@ describe("questions data integrity", () => {
 });
 
 describe("loadQuestions join function", () => {
-  it("returns 30 questions for both locales", () => {
-    expect(loadQuestions("en")).toHaveLength(30);
-    expect(loadQuestions("es")).toHaveLength(30);
+  it("returns 60 questions for both locales", () => {
+    expect(loadQuestions("en")).toHaveLength(60);
+    expect(loadQuestions("es")).toHaveLength(60);
   });
 
   it("returns the same number of questions for both locales", () => {
@@ -138,8 +166,8 @@ describe("loadQuestions join function", () => {
     }
   });
 
-  it("Q004, Q015, Q021, Q025, and Q028 from loadQuestions are layer safety", () => {
-    for (const id of ["Q004", "Q015", "Q021", "Q025", "Q028"]) {
+  it("all safety questions from loadQuestions are layer safety", () => {
+    for (const id of safetyIds) {
       const question = loadQuestions("es").find((q) => q.id === id);
       expect(question).toBeDefined();
       expect(question!.layer).toBe("safety");
@@ -149,18 +177,7 @@ describe("loadQuestions join function", () => {
 
   it("safety and meta layers do not contribute to the dimension profile", () => {
     const questions = loadQuestions("es");
-    const nonProfileQuestionIds = [
-      "Q004",
-      "Q015",
-      "Q016",
-      "Q017",
-      "Q019",
-      "Q021",
-      "Q024",
-      "Q025",
-      "Q027",
-      "Q028",
-    ];
+    const nonProfileQuestionIds = expectedIds.filter((id) => scoring[id].layer !== "dimension");
     const answers: Answer[] = nonProfileQuestionIds.map((questionId) => ({
       questionId,
       option: "interested",
@@ -172,6 +189,20 @@ describe("loadQuestions join function", () => {
     expect(result.curiosidad).toBe(0);
     expect(result.intencion).toBe(0);
     expect(result.vetoedTopics).toHaveLength(0);
+  });
+
+  it("rule-1.4-orientacion-answers-do-not-contribute-to-the-dimension-profile", () => {
+    const questions = loadQuestions("es");
+    const answers: Answer[] = orientationIds.map((questionId) => ({
+      questionId,
+      option: "interested",
+    }));
+
+    const result = computeScore(questions, answers);
+
+    expect(Object.keys(result.dimensions)).toHaveLength(0);
+    expect(result.curiosidad).toBe(0);
+    expect(result.intencion).toBe(0);
   });
 
   it("EN text differs from ES text for every question", () => {
