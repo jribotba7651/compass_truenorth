@@ -1,24 +1,25 @@
 {
   "_README": "Mapa de scoring del Question Bank. El TEXTO de las preguntas vive en es/questions.json y en/questions.json (Seccion 9.5). Este archivo solo tiene la METADATA de scoring, separada del texto a proposito: cambiar idioma nunca cambia el resultado. Cada entrada se une al texto por Question ID.",
-
   "_capas": {
     "dimension": "Mide una de las 8 dimensiones del perfil. Entra al scoring (matriz 4.6).",
     "safety": "Mide comodidad, control o pausa (las preguntas con 'Limites'). No es dimension del perfil. Informa tono, defaults y gradualidad. No entra al calculo de las 8 dimensiones.",
     "meta": "Mide preferencia sobre el producto o configura privacidad. No puntua nada. Configura la experiencia."
   },
-
   "_dimensiones_validas": [
-    "visual", "sensorial", "emocional", "fantasia_narrativa",
-    "novedad", "validacion", "poder_consensuado", "comunicacion"
+    "visual",
+    "sensorial",
+    "emocional",
+    "fantasia_narrativa",
+    "novedad",
+    "validacion",
+    "poder_consensuado",
+    "comunicacion"
   ],
-
   "_polarity": {
     "normal": "Mas acuerdo = mas apertura. El 95% de las preguntas.",
     "inverse": "Mas acuerdo = menos apertura. Solo preguntas de reserva/privacidad. El motor voltea el mapeo, no los pesos."
   },
-
   "_pendiente_para_codex": "Las entradas marcadas con \"verified\": true fueron confirmadas leyendo Notion. Las demas preguntas del banco (el banco llega al menos a Q037) deben anadirse aqui al exportar desde Notion, siguiendo el mismo patron. Para cada una: leer su Dimension e Intent en Notion, asignar capa (dimension/safety/meta), topic, y polarity. Regla rapida: Dimension 'Limites' => capa safety. Preguntas que activan ajustes (private-by-default, poder saltar) => capa meta. Dimension 'Privacidad' => casi siempre meta o safety, rara vez dimension. Todo lo demas => capa dimension, polarity normal, salvo reserva explicita.",
-
   "questions": {
     "Q001": {
       "verified": true,
@@ -100,6 +101,33 @@
       "polarity": "normal",
       "note": "Comodidad hablando de fantasia sin compromiso de actuar. Regla 1.5: fantasia nunca suma intencion."
     },
+    "Q011": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "fantasia_narrativa",
+      "topic": "fantasia_narrativa",
+      "polarity": "normal",
+      "riskLevel": "Medium",
+      "note": "Explora fantasia como historia, escena o juego imaginado. Contribuye a fantasia narrativa."
+    },
+    "Q012": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "fantasia_narrativa",
+      "topic": "juego",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Apertura a juego y version ludica de si mismo/a dentro de fantasia narrativa."
+    },
+    "Q013": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "emocional",
+      "topic": "cuidado",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Importancia de ternura y cuidado posterior. Contribuye a la dimension emocional."
+    },
     "Q014": {
       "verified": true,
       "layer": "dimension",
@@ -109,12 +137,22 @@
       "riskLevel": "Medium",
       "note": "Sube Poder consensuado solo si no hay limite firme en el tema."
     },
+    "Q015": {
+      "verified": true,
+      "layer": "safety",
+      "dimension": null,
+      "topic": "limites",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Acuerdo para pausar una experiencia. Informa seguridad y gradualidad, no perfil."
+    },
     "Q016": {
       "verified": true,
       "layer": "meta",
       "dimension": null,
       "topic": "privacidad",
       "polarity": "inverse",
+      "riskLevel": "Low",
       "note": "Reserva personal. Restringe sharing por defecto. No puntua dimension."
     },
     "Q017": {
@@ -123,15 +161,35 @@
       "dimension": null,
       "topic": "privacidad",
       "polarity": "inverse",
+      "riskLevel": "Low",
       "note": "Activa private-by-default en modo pareja. No puntua dimension."
     },
-    "Q037": {
+    "Q018": {
       "verified": true,
-      "layer": "safety",
-      "dimension": null,
-      "topic": "control_pausa",
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "compartir_control",
       "polarity": "normal",
-      "note": "Comodidad por poder detener en cualquier momento. Informa gradualidad, no perfil."
+      "riskLevel": "Low",
+      "note": "Comodidad compartiendo con control explicito. Contribuye a comunicacion."
+    },
+    "Q019": {
+      "verified": true,
+      "layer": "meta",
+      "dimension": null,
+      "topic": "sugerencias",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Preferencia de producto para sugerencias sin revelar detalles privados. No puntua dimension."
+    },
+    "Q020": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "coincidencias",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Utilidad de coincidencias de curiosidad en pareja. Contribuye a comunicacion."
     }
   }
 }

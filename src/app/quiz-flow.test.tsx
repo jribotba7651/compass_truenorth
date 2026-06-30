@@ -91,18 +91,18 @@ describe("rule-1.3-quiz-answers-never-leave-client", () => {
 // ---------------------------------------------------------------------------
 
 describe("quiz progress", () => {
-  it("shows question 1 of 10 on the first question", async () => {
+  it("shows question 1 of 20 on the first question", async () => {
     await moveToQuiz();
     expect(
       screen.getByRole("progressbar", { hidden: false }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/pregunta 1 de 10|question 1 of 10/i)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 1 de 20|question 1 of 20/i)).toBeInTheDocument();
   });
 
   it("advances the counter when moving to next question", async () => {
     const user = await moveToQuiz();
     await user.click(screen.getByRole("button", { name: /siguiente|next/i }));
-    expect(screen.getByText(/pregunta 2 de 10|question 2 of 10/i)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 2 de 20|question 2 of 20/i)).toBeInTheDocument();
   });
 });
 
@@ -331,12 +331,12 @@ describe("language-switch-mid-quiz-preserves-answers", () => {
   it("switching locale updates question text but keeps question index", async () => {
     const user = await moveToQuiz();
     await user.click(screen.getByRole("button", { name: /siguiente|next/i }));
-    expect(screen.getByText(/pregunta 2 de 10/i)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 2 de 20/i)).toBeInTheDocument();
 
     const langGroup = screen.getByRole("group", { name: /language|idioma/i });
     await user.click(within(langGroup).getByRole("button", { name: /^en$/i }));
 
-    expect(screen.getByText(/question 2 of 10/i)).toBeInTheDocument();
+    expect(screen.getByText(/question 2 of 20/i)).toBeInTheDocument();
   });
 });
 
