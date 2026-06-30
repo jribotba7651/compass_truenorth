@@ -1,0 +1,56 @@
+{
+  "landing": {
+    "eyebrow": "Curio / Desire Map",
+    "headline": "Discover your intimate curiosity style in 2 minutes.",
+    "subhead": "An adult entertainment and self-exploration space designed to turn private answers into clear, conversation-ready language.",
+    "cta_start": "Get Started",
+    "cta_principles": "Our Principles",
+    "principles_aria": "Curio's principles",
+    "principle_1_title": "Curiosity, not a diagnosis",
+    "principle_1_body": "Curio is adult entertainment, not health care or medical or psychological advice. The frame is curiosity and conversation.",
+    "principle_2_title": "Private by design",
+    "principle_2_body": "Individual mode is local-only by design: your answers live in the browser and are never sent to any server.",
+    "principle_3_title": "Consent first",
+    "principle_3_body": "No one moves forward without confirming 18+ and agreeing to answer voluntarily. Sharing is always a separate decision."
+  },
+  "age": {
+    "step": "Step 1 of 2",
+    "heading": "Confirm you're 18+",
+    "description": "Curio is for adults only. Before continuing, we need your explicit age confirmation.",
+    "checkbox": "I confirm I am 18 years of age or older.",
+    "hint_before": "Please confirm your age to continue.",
+    "hint_after": "Age confirmed — ready to proceed.",
+    "back": "Back",
+    "continue": "Continue"
+  },
+  "consent": {
+    "step": "Step 2 of 2",
+    "heading": "Consent before you answer",
+    "description": "Answering in Curio should be an adult, voluntary, and private decision. Check each point to continue.",
+    "items": {
+      "adultEntertainment": "I understand that Curio is adult entertainment and self-exploration — not health care, diagnosis, or medical or psychological advice.",
+      "voluntaryAnswers": "I agree to answer voluntarily and can pause, leave, or skip any question at any time.",
+      "localOnly": "I understand that individual mode is local-only: my answers are not sent to any server in this flow.",
+      "separateSharing": "I understand that sharing results requires separate consent and is never tied to a purchase."
+    },
+    "hint_before": "You need to accept all points before continuing.",
+    "hint_after": "Explicit consent complete.",
+    "back": "Back",
+    "continue": "I consent & continue"
+  },
+  "ready": {
+    "eyebrow": "Consent complete",
+    "heading": "You're all set to explore.",
+    "description": "Nothing has been saved. When the quiz starts, your individual answers stay in your browser.",
+    "restart": "Back to start"
+  },
+  "footer": {
+    "disclaimer": "Curio is adult entertainment and self-exploration. Not health care, diagnosis, or medical or psychological advice.",
+    "clear_data": "Clear data"
+  },
+  "lang_selector": {
+    "label": "Language",
+    "en": "EN",
+    "es": "ES"
+  }
+}

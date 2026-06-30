@@ -43,11 +43,11 @@ describe("Curio onboarding", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /descubre tu estilo de curiosidad intima/i,
+        name: /descubre tu estilo de curiosidad/i,
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getAllByText(/entretenimiento y autoexploracion/i).length,
+      screen.getAllByText(/entretenimiento y autoexplor/i).length,
     ).toBeGreaterThan(0);
     expect(screen.getAllByText(/no es salud/i).length).toBeGreaterThan(0);
     expect(screen.queryByText(/diagnostica tu/i)).not.toBeInTheDocument();
@@ -87,7 +87,7 @@ describe("Curio onboarding", () => {
 
     expect(canAdvanceFromConsent(initialConsentState)).toBe(false);
 
-    const acceptButton = screen.getByRole("button", { name: /acepto y continuo/i });
+    const acceptButton = screen.getByRole("button", { name: /acepto y contin/i });
     expect(acceptButton).toBeDisabled();
 
     const consentCheckboxes = screen.getAllByRole("checkbox");
