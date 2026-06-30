@@ -1,0 +1,15 @@
+{
+  "_README": "Question text for Q001-Q010. Text only — scoring lives in src/data/questions-scoring.json and is joined by id. Switching locale never changes scoring results.",
+  "questions": {
+    "Q001": "When a new intimate experience comes to mind, what tends to catch your attention first?",
+    "Q002": "How much does trust matter to you before exploring an intimate curiosity?",
+    "Q003": "When something sparks your curiosity, do you like to talk it through first or discover it little by little?",
+    "Q004": "How comfortable do you feel saying \"no\" or \"not yet\" in an intimate conversation?",
+    "Q005": "How appealing is it to set a special mood before an intimate experience?",
+    "Q006": "How strongly do you respond to visual details like style, clothing, presence, or attitude?",
+    "Q007": "How important are gentle touch, texture, or physical closeness to your intimate curiosity?",
+    "Q008": "Are you drawn more to a spontaneous experience or one planned with intention?",
+    "Q009": "How much does feeling desired increase your curiosity?",
+    "Q010": "How comfortable are you talking about a fantasy without feeling you have to act on it?"
+  }
+}
