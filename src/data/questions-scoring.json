@@ -190,6 +190,96 @@
       "polarity": "normal",
       "riskLevel": "Low",
       "note": "Utilidad de coincidencias de curiosidad en pareja. Contribuye a comunicacion."
+    },
+    "Q021": {
+      "verified": true,
+      "layer": "safety",
+      "dimension": null,
+      "topic": "limites",
+      "polarity": "normal",
+      "riskLevel": "Medium",
+      "note": "Comodidad ante una curiosidad no compartida de la pareja. Informa limites y seguridad, no perfil."
+    },
+    "Q022": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "desacuerdo",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Apertura a entender desacuerdos con calma. Contribuye a comunicacion."
+    },
+    "Q023": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "emocional",
+      "topic": "gradualidad",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Preferencia por inicio suave y gradual. Contribuye a emocional."
+    },
+    "Q024": {
+      "verified": true,
+      "layer": "meta",
+      "dimension": null,
+      "topic": "enfoque_resultado",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Preferencia de producto sobre enfocar zonas comunes antes que diferencias. No puntua dimension."
+    },
+    "Q025": {
+      "verified": true,
+      "layer": "safety",
+      "dimension": null,
+      "topic": "limites",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Importancia de marcar limites firmes como no negociables. Informa seguridad, no perfil."
+    },
+    "Q026": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "fantasia_narrativa",
+      "topic": "fantasia_sin_accion",
+      "polarity": "normal",
+      "riskLevel": "Medium",
+      "note": "Curiosidad solo en imaginacion sin intencion practica. Regla 1.5: fantasia no suma intencion practica."
+    },
+    "Q027": {
+      "verified": true,
+      "layer": "meta",
+      "dimension": null,
+      "topic": "espacio_privado",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Preferencia por ordenar curiosidades en privado antes de hablarlas. No puntua dimension."
+    },
+    "Q028": {
+      "verified": true,
+      "layer": "safety",
+      "dimension": null,
+      "topic": "limites",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Claridad entre curiosidad e intencion de probar. Informa seguridad y separacion conceptual, no perfil."
+    },
+    "Q029": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "comunicacion",
+      "topic": "escrito",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Comodidad explorando temas por escrito antes de hablarlos. Contribuye a comunicacion."
+    },
+    "Q030": {
+      "verified": true,
+      "layer": "dimension",
+      "dimension": "validacion",
+      "topic": "validacion",
+      "polarity": "normal",
+      "riskLevel": "Low",
+      "note": "Importancia de validacion sin burla ni juicio. Contribuye a validacion."
     }
   }
 }
