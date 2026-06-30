@@ -1,5 +1,5 @@
 {
-  "_README": "Question text for Q001-Q020. Text only - scoring lives in src/data/questions-scoring.json and is joined by id. Switching locale never changes scoring results.",
+  "_README": "Question text for Q001-Q030. Text only - scoring lives in src/data/questions-scoring.json and is joined by id. Switching locale never changes scoring results.",
   "questions": {
     "Q001": "When a new intimate experience comes to mind, what tends to catch your attention first?",
     "Q002": "How much does trust matter to you before exploring an intimate curiosity?",
@@ -20,6 +20,16 @@
     "Q017": "Would you prefer your results stay just for you, even when using couple mode?",
     "Q018": "How comfortable are you sharing curiosities if you can choose exactly what gets shared?",
     "Q019": "Would you like the app to suggest conversation topics without revealing private details?",
-    "Q020": "How useful would it be to see where your curiosity and your partner's overlap?"
+    "Q020": "How useful would it be to see where your curiosity and your partner's overlap?",
+    "Q021": "How comfortable are you if your partner has a curiosity you don't share?",
+    "Q022": "When you and your partner don't match on a curiosity, do you prefer to close the topic or understand it calmly?",
+    "Q023": "How important is it that a shared curiosity starts off gently and gradually?",
+    "Q024": "Would you like the couple result to focus on common ground before differences?",
+    "Q025": "How important is it that the app marks firm boundaries as non-negotiable zones?",
+    "Q026": "Have you ever felt curious about something only in your imagination, without wanting to act on it?",
+    "Q027": "Would you like a private space to sort out your curiosities before talking them over with someone?",
+    "Q028": "How clear are you on the difference between \"I'm curious\" and \"I want to try it\"?",
+    "Q029": "How comfortable are you exploring intimate topics in writing before talking about them out loud?",
+    "Q030": "How important is it that the other person validates your desire without mocking or judging?"
   }
 }

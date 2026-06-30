@@ -6,7 +6,7 @@ import { loadQuestions } from "@/lib/questions";
 import { computeScore } from "@/lib/scoring";
 import type { Answer } from "@/lib/scoring";
 
-const expectedIds = Array.from({ length: 20 }, (_, index) =>
+const expectedIds = Array.from({ length: 30 }, (_, index) =>
   "Q" + String(index + 1).padStart(3, "0"),
 );
 const esIds = Object.keys(esQuestions.questions);
@@ -28,7 +28,7 @@ type ScoringForTest = Record<
 const scoring = scoringData.questions as ScoringForTest;
 
 describe("questions data integrity", () => {
-  it("es/questions.json, en/questions.json, and questions-scoring.json expose exactly Q001-Q020", () => {
+  it("es/questions.json, en/questions.json, and questions-scoring.json expose exactly Q001-Q030", () => {
     expect(sortIds(esIds)).toEqual(expectedIds);
     expect(sortIds(enIds)).toEqual(expectedIds);
     expect(sortIds(scoringIds)).toEqual(expectedIds);
@@ -43,25 +43,25 @@ describe("questions data integrity", () => {
     expect(missing).toEqual([]);
   });
 
-  it("Q004 and Q015 are layer safety and have null dimension", () => {
-    for (const id of ["Q004", "Q015"]) {
+  it("Q004, Q015, Q021, Q025, and Q028 are layer safety and have null dimension", () => {
+    for (const id of ["Q004", "Q015", "Q021", "Q025", "Q028"]) {
       expect(scoring[id].layer).toBe("safety");
       expect(scoring[id].dimension).toBeNull();
     }
   });
 
-  it("Q015 is safety, Q016/Q017/Q019 are meta, and other Q011-Q020 entries are dimension", () => {
+  it("Q021/Q025/Q028 are safety, Q024/Q027 are meta, and other Q021-Q030 entries are dimension", () => {
     const expectedLayers: Record<string, string> = {
-      Q011: "dimension",
-      Q012: "dimension",
-      Q013: "dimension",
-      Q014: "dimension",
-      Q015: "safety",
-      Q016: "meta",
-      Q017: "meta",
-      Q018: "dimension",
-      Q019: "meta",
-      Q020: "dimension",
+      Q021: "safety",
+      Q022: "dimension",
+      Q023: "dimension",
+      Q024: "meta",
+      Q025: "safety",
+      Q026: "dimension",
+      Q027: "meta",
+      Q028: "safety",
+      Q029: "dimension",
+      Q030: "dimension",
     };
 
     for (const [id, layer] of Object.entries(expectedLayers)) {
@@ -77,6 +77,12 @@ describe("questions data integrity", () => {
     }
   });
 
+  it("Q021-Q030 are all normal polarity", () => {
+    for (const id of expectedIds.slice(20)) {
+      expect(scoring[id].polarity).toBe("normal");
+    }
+  });
+
   it("layer=dimension entries have dimensions and safety/meta entries do not", () => {
     for (const id of expectedIds) {
       const sc = scoring[id];
@@ -88,7 +94,7 @@ describe("questions data integrity", () => {
     }
   });
 
-  it("Q011-Q020 include riskLevel metadata", () => {
+  it("Q011-Q030 include riskLevel metadata", () => {
     for (const id of expectedIds.slice(10)) {
       expect(["Low", "Medium", "High"]).toContain(scoring[id].riskLevel);
     }
@@ -105,9 +111,9 @@ describe("questions data integrity", () => {
 });
 
 describe("loadQuestions join function", () => {
-  it("returns 20 questions for both locales", () => {
-    expect(loadQuestions("en")).toHaveLength(20);
-    expect(loadQuestions("es")).toHaveLength(20);
+  it("returns 30 questions for both locales", () => {
+    expect(loadQuestions("en")).toHaveLength(30);
+    expect(loadQuestions("es")).toHaveLength(30);
   });
 
   it("returns the same number of questions for both locales", () => {
@@ -132,8 +138,8 @@ describe("loadQuestions join function", () => {
     }
   });
 
-  it("Q004 and Q015 from loadQuestions are layer safety", () => {
-    for (const id of ["Q004", "Q015"]) {
+  it("Q004, Q015, Q021, Q025, and Q028 from loadQuestions are layer safety", () => {
+    for (const id of ["Q004", "Q015", "Q021", "Q025", "Q028"]) {
       const question = loadQuestions("es").find((q) => q.id === id);
       expect(question).toBeDefined();
       expect(question!.layer).toBe("safety");
@@ -143,7 +149,18 @@ describe("loadQuestions join function", () => {
 
   it("safety and meta layers do not contribute to the dimension profile", () => {
     const questions = loadQuestions("es");
-    const nonProfileQuestionIds = ["Q004", "Q015", "Q016", "Q017", "Q019"];
+    const nonProfileQuestionIds = [
+      "Q004",
+      "Q015",
+      "Q016",
+      "Q017",
+      "Q019",
+      "Q021",
+      "Q024",
+      "Q025",
+      "Q027",
+      "Q028",
+    ];
     const answers: Answer[] = nonProfileQuestionIds.map((questionId) => ({
       questionId,
       option: "interested",

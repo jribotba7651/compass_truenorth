@@ -105,7 +105,12 @@
     "cuidado": "Care",
     "compartir_control": "Controlled sharing",
     "sugerencias": "Suggestions",
-    "coincidencias": "Overlap"
+    "coincidencias": "Overlap",
+    "desacuerdo": "Mismatch",
+    "gradualidad": "Gradual pace",
+    "enfoque_resultado": "Result focus",
+    "espacio_privado": "Private space",
+    "escrito": "Written exploration"
   },
   "footer": {
     "disclaimer": "Curio is adult entertainment and self-exploration. Not health care, diagnosis, or medical or psychological advice.",

@@ -105,7 +105,12 @@
     "cuidado": "Cuidado",
     "compartir_control": "Compartir con control",
     "sugerencias": "Sugerencias",
-    "coincidencias": "Coincidencias"
+    "coincidencias": "Coincidencias",
+    "desacuerdo": "Desacuerdo",
+    "gradualidad": "Gradualidad",
+    "enfoque_resultado": "Enfoque del resultado",
+    "espacio_privado": "Espacio privado",
+    "escrito": "Exploración por escrito"
   },
   "footer": {
     "disclaimer": "Curio es entretenimiento y autoexploración para adultos. No es salud, diagnóstico ni consejo médico o psicológico.",
