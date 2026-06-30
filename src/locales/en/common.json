@@ -65,7 +65,7 @@
   "results": {
     "eyebrow": "Results",
     "heading": "Your curiosity profile",
-    "disclaimer": "This is an entertainment result, not a psychological diagnosis or medical advice. These ranges are an invitation to conversation, not absolute truth.",
+    "disclaimer": "Curio is a curiosity and conversation experience for adults. It is not health, not a diagnosis, not medical or psychological advice.",
     "section_axes": "Global axes",
     "curiosidad_label": "Curiosity",
     "intencion_label": "Intention",
@@ -74,7 +74,19 @@
     "limits_explanation": "You marked these topics as a hard limit. They will not appear as recommendations.",
     "no_dimensions": "No dimensions with enough data.",
     "no_limits": "You didn't mark any hard limits.",
-    "restart": "Start over"
+    "restart": "Start over",
+    "insight_intro": "This isn't a diagnosis or a label. It's a map of where your curiosity is moving right now, so you have clearer words and can explore at your own pace.",
+    "profile": {
+      "visual": "The visual carries weight in your curiosity. Style, presence, atmosphere, and what you see spark something in you. It's not shallow: it's a real doorway into desire.",
+      "sensorial": "The sensory pulls at you: touch, texture, sound, closeness. Your curiosity runs through the body and through how an experience feels, not just the idea of it.",
+      "emocional": "Trust and emotional connection sit at the center of how you explore. You need to feel safe before you open up, and that's not a barrier: it's the ground your curiosity moves freely from.",
+      "fantasia_narrativa": "Your curiosity lives a lot in the imagination, as story, scene, or play. Enjoying something in fantasy is a whole territory of its own, separate from any intention to act on it.",
+      "novedad": "You're drawn to what's new, to surprise, to what breaks the routine. Novelty is part of how your curiosity lights up, and it works best with clear agreements holding it.",
+      "validacion": "Feeling desired, seen, valued, feeds your curiosity. Having the other person receive your desire without judgment matters a lot in how you open up.",
+      "poder_consensuado": "You're curious about the dynamic of leading or being led, always from agreement. What makes this work isn't the role, it's the trust and the shared yes behind it.",
+      "comunicacion": "Conversation is one of your strongest tools. Talking things through, putting words to them, asking yourself what you want, is central to how you explore and how you feel safe."
+    },
+    "limits_intro": "These are the topics you marked as firm boundaries. They don't appear as suggestions or recommendations. They're yours, and they're here to be clear and respected."
   },
   "dimensions": {
     "visual": "Visual",

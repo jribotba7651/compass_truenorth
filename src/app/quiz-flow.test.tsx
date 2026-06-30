@@ -60,6 +60,12 @@ async function skipAllAndFinish(_user: ReturnType<typeof userEvent.setup>) {
   }
 }
 
+async function answerCurrentQuestion(name: RegExp) {
+  const option = screen.getByRole("radio", { name });
+  fireEvent.click(option);
+  fireEvent.click(getQuizNextButton()!);
+}
+
 // ---------------------------------------------------------------------------
 // Rule 1.3 — answers never leave the client
 // ---------------------------------------------------------------------------
@@ -212,7 +218,7 @@ describe("rule-1.6-firm-boundary-in-limits-not-recommendations", () => {
       name: /límites personales|personal limits/i,
     });
     expect(limitsSection).toBeInTheDocument();
-    expect(within(limitsSection).getByText(/límites|boundaries/i)).toBeInTheDocument();
+    expect(within(limitsSection).getByText(/Novedad|Novelty/i)).toBeInTheDocument();
   });
 
   it("firm_boundary topic does not appear in any dimension score bar", async () => {
@@ -232,7 +238,7 @@ describe("rule-1.6-firm-boundary-in-limits-not-recommendations", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("limits_explanation text is shown and does not use recommendation language", async () => {
+  it("limits_intro text is shown and does not use recommendation language", async () => {
     const user = await moveToQuiz();
     await user.click(
       screen.getByRole("radio", { name: /límite firme|hard limit/i }),
@@ -240,7 +246,7 @@ describe("rule-1.6-firm-boundary-in-limits-not-recommendations", () => {
     await skipAllAndFinish(user);
 
     expect(
-      screen.getByText(/no aparecen como recomendaciones|will not appear as recommendations/i),
+      screen.getByText(/no aparecen como sugerencias ni recomendaciones|do not appear as suggestions or recommendations/i),
     ).toBeInTheDocument();
     expect(screen.queryByText(/recomendamos|we recommend/i)).not.toBeInTheDocument();
   });
@@ -249,6 +255,51 @@ describe("rule-1.6-firm-boundary-in-limits-not-recommendations", () => {
 // ---------------------------------------------------------------------------
 // Results use computeScore, not duplicated logic
 // ---------------------------------------------------------------------------
+
+describe("individual result narrative", () => {
+  it("shows only prominent dimension narratives", async () => {
+    const user = await moveToQuiz();
+
+    await answerCurrentQuestion(/me interesa explorarlo|i'd like to explore it/i);
+    await answerCurrentQuestion(/con la confianza adecuada|with the right trust/i);
+    await answerCurrentQuestion(/con la confianza adecuada|with the right trust/i);
+    fireEvent.click(getQuizNextButton()!);
+    await answerCurrentQuestion(/me da curiosidad|i'm curious about it/i);
+    await skipAllAndFinish(user);
+
+    expect(screen.getByText(/Esto no es un diagn/i)).toBeInTheDocument();
+    expect(screen.getByText(/Te atrae lo nuevo/i)).toBeInTheDocument();
+    expect(screen.getByText(/La confianza y el v/i)).toBeInTheDocument();
+    expect(screen.getByText(/La conversaci/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Lo sensorial te llama/i)).not.toBeInTheDocument();
+  });
+
+  it("does not show safety or meta narratives in the profile", async () => {
+    const questions = loadQuestions("es");
+    const answers: Answer[] = ["Q004", "Q039", "Q040", "Q041", "Q042", "Q043", "Q052"].map(
+      (questionId) => ({ questionId, option: "interested" }),
+    );
+
+    const result = computeScore(questions, answers);
+
+    expect(Object.keys(result.dimensions)).toHaveLength(0);
+  });
+
+  it("changes narrative text when the language changes", async () => {
+    const user = await moveToQuiz();
+    await answerCurrentQuestion(/me interesa explorarlo|i'd like to explore it/i);
+    await skipAllAndFinish(user);
+
+    expect(screen.getByText(/Esto no es un diagn/i)).toBeInTheDocument();
+    expect(screen.getByText(/Te atrae lo nuevo/i)).toBeInTheDocument();
+
+    const langGroup = screen.getByRole("group", { name: /language|idioma/i });
+    await user.click(within(langGroup).getByRole("button", { name: /^en$/i }));
+
+    expect(screen.getByText(/This isn't a diagnosis or a label/i)).toBeInTheDocument();
+    expect(screen.getByText(/You're drawn to what's new/i)).toBeInTheDocument();
+  });
+});
 
 describe("result-uses-computeScore-not-duplicated-logic", () => {
   it("interested answer on Q001 (novedad) produces non-zero novedad dimension score", async () => {
@@ -358,11 +409,11 @@ describe("rule-1.1-results-screen-shows-entertainment-disclaimer", () => {
 
     expect(
       screen.getByText(
-        /resultado de entretenimiento|entertainment result/i,
+        /Curio es una experiencia de curiosidad y conversaci|Curio is a curiosity and conversation experience for adults/i,
       ),
     ).toBeInTheDocument();
-    expect(screen.queryByText(/diagnóstico psicológico|psychological diagnosis/i)).toBeInTheDocument();
-    expect(screen.queryByText(/prescripción|prescription/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/trastorno|disorder/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/prescripci|prescription/i)).not.toBeInTheDocument();
   });
 });
 
