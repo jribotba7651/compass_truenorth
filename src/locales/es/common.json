@@ -42,7 +42,64 @@
     "eyebrow": "Consentimiento listo",
     "heading": "Ya puedes explorar con calma.",
     "description": "No se ha guardado nada. Cuando empiece el quiz, tus respuestas individuales se quedan en tu navegador.",
+    "start_quiz": "Comenzar quiz",
     "restart": "Volver al inicio"
+  },
+  "quiz": {
+    "progress": "Pregunta {{current}} de {{total}}",
+    "options_legend": "Elige una opción",
+    "back": "Anterior",
+    "next": "Siguiente",
+    "finish": "Ver resultados",
+    "options": {
+      "firm_boundary": "Límite firme",
+      "not_now": "No por ahora",
+      "fantasy_only": "Solo en fantasía",
+      "curious": "Me da curiosidad",
+      "talk_first": "Hablarlo primero",
+      "with_trust": "Con la confianza adecuada",
+      "interested": "Me interesa explorarlo",
+      "skip": "Prefiero no contestar"
+    }
+  },
+  "results": {
+    "eyebrow": "Resultados",
+    "heading": "Tu perfil de curiosidad",
+    "disclaimer": "Este es un resultado de entretenimiento, no un diagnóstico psicológico ni consejo médico. Los rangos son una invitación a la conversación, no una verdad absoluta.",
+    "section_axes": "Ejes globales",
+    "curiosidad_label": "Curiosidad",
+    "intencion_label": "Intención",
+    "section_dimensions": "Dimensiones exploradas",
+    "section_limits": "Límites personales",
+    "limits_explanation": "Marcaste estos temas como límite firme. No aparecen como recomendaciones.",
+    "no_dimensions": "No hay dimensiones con datos suficientes.",
+    "no_limits": "No marcaste ningún límite firme.",
+    "restart": "Empezar de nuevo"
+  },
+  "dimensions": {
+    "visual": "Visual",
+    "sensorial": "Sensorial",
+    "emocional": "Emocional",
+    "fantasia_narrativa": "Fantasía narrativa",
+    "novedad": "Novedad",
+    "validacion": "Validación",
+    "poder_consensuado": "Poder consensuado",
+    "comunicacion": "Comunicación"
+  },
+  "topics": {
+    "novedad": "Novedad",
+    "confianza": "Confianza",
+    "comunicacion": "Comunicación",
+    "limites": "Límites",
+    "ambiente": "Ambiente sensorial",
+    "visual": "Visual",
+    "tacto": "Tacto",
+    "espontaneidad": "Espontaneidad",
+    "validacion": "Validación",
+    "fantasia_sin_accion": "Fantasía sin acción",
+    "poder_consensuado": "Poder consensuado",
+    "privacidad": "Privacidad",
+    "control_pausa": "Control y pausa"
   },
   "footer": {
     "disclaimer": "Curio es entretenimiento y autoexploración para adultos. No es salud, diagnóstico ni consejo médico o psicológico.",

@@ -1,9 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { LangProvider, LanguageSelector, useI18n } from "@/lib/i18n";
+import { loadQuestions } from "@/lib/questions";
+import type { QuestionWithText } from "@/lib/questions";
+import {
+  computeScore,
+  type Answer,
+  type AnswerOption,
+  type Dimension,
+  type ScoreResult,
+} from "@/lib/scoring";
 
-export type OnboardingStep = "landing" | "age" | "consent" | "ready";
+export type OnboardingStep =
+  | "landing"
+  | "age"
+  | "consent"
+  | "ready"
+  | "quiz"
+  | "results";
 
 type ConsentKey =
   | "adultEntertainment"
@@ -27,6 +42,18 @@ const consentKeys: ConsentKey[] = [
   "separateSharing",
 ];
 
+// Ordered from most-closed to most-open, skip at the end (scale clarity, no nudge)
+const QUIZ_ANSWER_OPTIONS: AnswerOption[] = [
+  "firm_boundary",
+  "not_now",
+  "fantasy_only",
+  "curious",
+  "talk_first",
+  "with_trust",
+  "interested",
+  "skip",
+];
+
 export function canAdvanceFromAge(isAdult: boolean) {
   return isAdult;
 }
@@ -48,14 +75,52 @@ export default function OnboardingFlow() {
 }
 
 function OnboardingFlowInner() {
+  const { locale } = useI18n();
+
   const [step, setStep] = useState<OnboardingStep>("landing");
   const [isAdult, setIsAdult] = useState(false);
   const [consent, setConsent] = useState<ConsentState>(freshConsentState);
+
+  // Quiz state — lives only in React memory, never touches server or storage (Rule 1.3)
+  const [quizAnswers, setQuizAnswers] = useState<Record<string, AnswerOption>>(
+    {},
+  );
+  const [quizIdx, setQuizIdx] = useState(0);
+  const [scoreResult, setScoreResult] = useState<ScoreResult | null>(null);
+
+  const questions = useMemo(() => loadQuestions(locale), [locale]);
 
   function resetFlow() {
     setStep("landing");
     setIsAdult(false);
     setConsent(freshConsentState());
+    setQuizAnswers({});
+    setQuizIdx(0);
+    setScoreResult(null);
+  }
+
+  function handleQuizAnswer(questionId: string, option: AnswerOption) {
+    setQuizAnswers((prev) => ({ ...prev, [questionId]: option }));
+  }
+
+  function handleQuizPrevious() {
+    if (quizIdx === 0) {
+      setStep("ready");
+    } else {
+      setQuizIdx((i) => i - 1);
+    }
+  }
+
+  function handleQuizNext() {
+    if (quizIdx < questions.length - 1) {
+      setQuizIdx((i) => i + 1);
+    } else {
+      const answerList: Answer[] = Object.entries(quizAnswers).map(
+        ([questionId, option]) => ({ questionId, option }),
+      );
+      setScoreResult(computeScore(questions, answerList));
+      setStep("results");
+    }
   }
 
   return (
@@ -67,9 +132,7 @@ function OnboardingFlowInner() {
           onAdultChange={setIsAdult}
           onBack={() => setStep("landing")}
           onContinue={() => {
-            if (canAdvanceFromAge(isAdult)) {
-              setStep("consent");
-            }
+            if (canAdvanceFromAge(isAdult)) setStep("consent");
           }}
         />
       )}
@@ -81,17 +144,40 @@ function OnboardingFlowInner() {
           }
           onBack={() => setStep("age")}
           onContinue={() => {
-            if (canAdvanceFromConsent(consent)) {
-              setStep("ready");
-            }
+            if (canAdvanceFromConsent(consent)) setStep("ready");
           }}
         />
       )}
-      {step === "ready" && <ReadyScreen onRestart={resetFlow} />}
+      {step === "ready" && (
+        <ReadyScreen
+          onStartQuiz={() => {
+            setQuizIdx(0);
+            setStep("quiz");
+          }}
+          onRestart={resetFlow}
+        />
+      )}
+      {step === "quiz" && (
+        <QuizScreen
+          questions={questions}
+          currentIdx={quizIdx}
+          answers={quizAnswers}
+          onAnswer={handleQuizAnswer}
+          onPrevious={handleQuizPrevious}
+          onNext={handleQuizNext}
+        />
+      )}
+      {step === "results" && scoreResult && (
+        <ResultsScreen result={scoreResult} onRestart={resetFlow} />
+      )}
       <SiteFooter onReset={resetFlow} />
     </div>
   );
 }
+
+// ---------------------------------------------------------------------------
+// Landing
+// ---------------------------------------------------------------------------
 
 function LandingScreen({ onStart }: { onStart: () => void }) {
   const { t } = useI18n();
@@ -163,6 +249,10 @@ function Principle({ title, body }: { title: string; body: string }) {
   );
 }
 
+// ---------------------------------------------------------------------------
+// Age gate
+// ---------------------------------------------------------------------------
+
 function AgeGateScreen({
   isAdult,
   onAdultChange,
@@ -223,6 +313,10 @@ function AgeGateScreen({
     </main>
   );
 }
+
+// ---------------------------------------------------------------------------
+// Consent
+// ---------------------------------------------------------------------------
 
 function ConsentScreen({
   consent,
@@ -296,7 +390,17 @@ function ConsentScreen({
   );
 }
 
-function ReadyScreen({ onRestart }: { onRestart: () => void }) {
+// ---------------------------------------------------------------------------
+// Ready
+// ---------------------------------------------------------------------------
+
+function ReadyScreen({
+  onStartQuiz,
+  onRestart,
+}: {
+  onStartQuiz: () => void;
+  onRestart: () => void;
+}) {
   const { t } = useI18n();
   return (
     <main className="grid min-h-[calc(100dvh-88px)] place-items-center bg-[#eef4f2] px-5 py-10">
@@ -310,17 +414,267 @@ function ReadyScreen({ onRestart }: { onRestart: () => void }) {
         <p className="mt-4 text-base leading-7 text-[#46534e]">
           {t("ready.description")}
         </p>
-        <button
-          type="button"
-          onClick={onRestart}
-          className="mt-8 inline-flex min-h-11 items-center justify-center rounded-lg bg-[#181610] px-5 text-sm font-semibold text-white transition hover:bg-[#2e2a22] focus:outline-none focus:ring-2 focus:ring-[#181610] focus:ring-offset-2"
-        >
-          {t("ready.restart")}
-        </button>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <button
+            type="button"
+            onClick={onStartQuiz}
+            className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#0f766e] px-5 text-sm font-semibold text-white transition hover:bg-[#0d625c] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
+          >
+            {t("ready.start_quiz")}
+          </button>
+          <button
+            type="button"
+            onClick={onRestart}
+            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[#aebdb7] px-5 text-sm font-semibold text-[#27312d] transition hover:bg-[#edf4f1] focus:outline-none focus:ring-2 focus:ring-[#0f766e]"
+          >
+            {t("ready.restart")}
+          </button>
+        </div>
       </section>
     </main>
   );
 }
+
+// ---------------------------------------------------------------------------
+// Quiz
+// ---------------------------------------------------------------------------
+
+function QuizScreen({
+  questions,
+  currentIdx,
+  answers,
+  onAnswer,
+  onPrevious,
+  onNext,
+}: {
+  questions: QuestionWithText[];
+  currentIdx: number;
+  answers: Record<string, AnswerOption>;
+  onAnswer: (questionId: string, option: AnswerOption) => void;
+  onPrevious: () => void;
+  onNext: () => void;
+}) {
+  const { t } = useI18n();
+  const question = questions[currentIdx];
+  if (!question) return null;
+
+  const isLast = currentIdx === questions.length - 1;
+  const selected = answers[question.id];
+
+  return (
+    <main className="grid min-h-[calc(100dvh-88px)] place-items-center bg-[#f0f4f2] px-5 py-10">
+      <section className="w-full max-w-2xl rounded-lg border border-[#c5d5cf] bg-white p-6 shadow-sm sm:p-8">
+        <div className="mb-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#0f766e]">
+            {t("quiz.progress", {
+              current: currentIdx + 1,
+              total: questions.length,
+            })}
+          </p>
+          <div
+            role="progressbar"
+            aria-valuenow={currentIdx + 1}
+            aria-valuemin={1}
+            aria-valuemax={questions.length}
+            className="mt-2 h-1.5 w-full rounded-full bg-[#d2ddd8]"
+          >
+            <div
+              className="h-full rounded-full bg-[#0f766e] transition-all duration-300"
+              style={{
+                width: `${((currentIdx + 1) / questions.length) * 100}%`,
+              }}
+            />
+          </div>
+        </div>
+
+        <h1 className="text-xl font-semibold leading-snug text-[#181610] sm:text-2xl">
+          {question.text}
+        </h1>
+
+        <fieldset className="mt-6">
+          <legend className="sr-only">{t("quiz.options_legend")}</legend>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {QUIZ_ANSWER_OPTIONS.map((option) => (
+              <label
+                key={option}
+                className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm leading-5 transition ${
+                  selected === option
+                    ? "border-[#0f766e] bg-[#e8f3ef] font-semibold text-[#0f5249]"
+                    : "border-[#d2ddd8] bg-[#f5f7f2] text-[#27312d] hover:border-[#0f766e]/50 hover:bg-[#edf4f1]"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name={`q-${question.id}`}
+                  value={option}
+                  checked={selected === option}
+                  onChange={() => onAnswer(question.id, option)}
+                  className="h-4 w-4 accent-[#0f766e]"
+                />
+                <span>{t(`quiz.options.${option}`)}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+          <button
+            type="button"
+            onClick={onPrevious}
+            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[#aebdb7] px-5 text-sm font-semibold text-[#27312d] transition hover:bg-[#edf4f1] focus:outline-none focus:ring-2 focus:ring-[#0f766e]"
+          >
+            {t("quiz.back")}
+          </button>
+          <button
+            type="button"
+            onClick={onNext}
+            className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#0f766e] px-5 text-sm font-semibold text-white transition hover:bg-[#0d625c] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
+          >
+            {isLast ? t("quiz.finish") : t("quiz.next")}
+          </button>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Results
+// ---------------------------------------------------------------------------
+
+function ResultsScreen({
+  result,
+  onRestart,
+}: {
+  result: ScoreResult;
+  onRestart: () => void;
+}) {
+  const { t } = useI18n();
+  const dimensionEntries = Object.entries(result.dimensions) as [
+    Dimension,
+    number,
+  ][];
+
+  return (
+    <main className="min-h-[calc(100dvh-88px)] bg-[#f5f7f2] px-5 py-10">
+      <div className="mx-auto max-w-2xl">
+        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#0f766e]">
+          {t("results.eyebrow")}
+        </p>
+        <h1 className="mt-3 text-3xl font-semibold text-[#181610] sm:text-4xl">
+          {t("results.heading")}
+        </h1>
+
+        {/* Rule 1.1 — entertainment disclaimer required on every results screen */}
+        <p className="mt-4 rounded-lg border border-[#d2ddd8] bg-white p-4 text-sm leading-6 text-[#46534e]">
+          {t("results.disclaimer")}
+        </p>
+
+        <section className="mt-8" aria-labelledby="axes-heading">
+          <h2
+            id="axes-heading"
+            className="text-base font-semibold text-[#181610]"
+          >
+            {t("results.section_axes")}
+          </h2>
+          <div className="mt-4 space-y-4">
+            <ScoreBar
+              label={t("results.curiosidad_label")}
+              value={result.curiosidad}
+            />
+            <ScoreBar
+              label={t("results.intencion_label")}
+              value={result.intencion}
+            />
+          </div>
+        </section>
+
+        <section className="mt-8" aria-labelledby="dimensions-heading">
+          <h2
+            id="dimensions-heading"
+            className="text-base font-semibold text-[#181610]"
+          >
+            {t("results.section_dimensions")}
+          </h2>
+          <div className="mt-4 space-y-4">
+            {dimensionEntries.length === 0 ? (
+              <p className="text-sm text-[#46534e]">
+                {t("results.no_dimensions")}
+              </p>
+            ) : (
+              dimensionEntries.map(([dim, score]) => (
+                <ScoreBar
+                  key={dim}
+                  label={t(`dimensions.${dim}`)}
+                  value={score}
+                />
+              ))
+            )}
+          </div>
+        </section>
+
+        {/* Rule 1.6 — vetoed topics displayed ONLY as personal limits, never as recommendations */}
+        <section className="mt-8" aria-labelledby="limits-heading">
+          <h2
+            id="limits-heading"
+            className="text-base font-semibold text-[#181610]"
+          >
+            {t("results.section_limits")}
+          </h2>
+          <p className="mt-1 text-sm text-[#46534e]">
+            {t("results.limits_explanation")}
+          </p>
+          <div className="mt-3">
+            {result.vetoedTopics.length === 0 ? (
+              <p className="text-sm text-[#46534e]">{t("results.no_limits")}</p>
+            ) : (
+              <ul className="space-y-2">
+                {result.vetoedTopics.map((topic) => (
+                  <li
+                    key={topic}
+                    className="flex items-center gap-3 rounded-lg border border-[#e8d5d3] bg-white px-4 py-3 text-sm text-[#27312d]"
+                  >
+                    <span className="h-2 w-2 flex-shrink-0 rounded-full bg-[#6b3b34]" />
+                    {t(`topics.${topic}`)}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+
+        <button
+          type="button"
+          onClick={onRestart}
+          className="mt-10 inline-flex min-h-11 items-center justify-center rounded-lg bg-[#181610] px-5 text-sm font-semibold text-white transition hover:bg-[#2e2a22] focus:outline-none focus:ring-2 focus:ring-[#181610] focus:ring-offset-2"
+        >
+          {t("results.restart")}
+        </button>
+      </div>
+    </main>
+  );
+}
+
+function ScoreBar({ label, value }: { label: string; value: number }) {
+  return (
+    <div>
+      <div className="flex justify-between text-sm">
+        <span className="font-medium text-[#27312d]">{label}</span>
+        <span className="text-[#46534e]">{value}/100</span>
+      </div>
+      <div className="mt-1 h-2 w-full rounded-full bg-[#d2ddd8]">
+        <div
+          className="h-full rounded-full bg-[#0f766e] transition-all duration-500"
+          style={{ width: `${value}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Footer
+// ---------------------------------------------------------------------------
 
 function SiteFooter({ onReset }: { onReset: () => void }) {
   const { t } = useI18n();
