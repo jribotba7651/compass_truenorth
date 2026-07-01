@@ -65,7 +65,7 @@
   "results": {
     "eyebrow": "Resultados",
     "heading": "Tu perfil de curiosidad",
-    "disclaimer": "Este es un resultado de entretenimiento, no un diagnóstico psicológico ni consejo médico. Los rangos son una invitación a la conversación, no una verdad absoluta.",
+    "disclaimer": "Curio es una experiencia de curiosidad y conversación para adultos. No es salud, no es diagnóstico, no es consejo médico ni psicológico.",
     "section_axes": "Ejes globales",
     "curiosidad_label": "Curiosidad",
     "intencion_label": "Intención",
@@ -74,7 +74,19 @@
     "limits_explanation": "Marcaste estos temas como límite firme. No aparecen como recomendaciones.",
     "no_dimensions": "No hay dimensiones con datos suficientes.",
     "no_limits": "No marcaste ningún límite firme.",
-    "restart": "Empezar de nuevo"
+    "restart": "Empezar de nuevo",
+    "insight_intro": "Esto no es un diagnóstico ni una etiqueta. Es un mapa de por dónde se mueve tu curiosidad ahora mismo, para que tengas palabras más claras y puedas explorarlo a tu ritmo.",
+    "profile": {
+      "visual": "Lo visual tiene peso en tu curiosidad. El estilo, la presencia, el ambiente y lo que ves encienden algo en ti. No es superficial: es una puerta de entrada legítima al deseo.",
+      "sensorial": "Lo sensorial te llama: el tacto, la textura, el sonido, la cercanía. Tu curiosidad pasa por el cuerpo y por cómo se siente una experiencia, no solo por la idea.",
+      "emocional": "La confianza y el vínculo emocional están en el centro de cómo exploras. Necesitas sentirte seguro o segura antes de abrirte, y eso no es una traba: es la base desde la que tu curiosidad se mueve con libertad.",
+      "fantasia_narrativa": "Tu curiosidad vive mucho en la imaginación, como historia, escena o juego. Disfrutar algo en la fantasía es un territorio completo en sí mismo, separado de cualquier intención de llevarlo a la práctica.",
+      "novedad": "Te atrae lo nuevo, la sorpresa, lo que rompe la rutina. La novedad es parte de cómo se enciende tu curiosidad, y funciona mejor cuando hay acuerdos claros que la sostienen.",
+      "validacion": "Sentirte deseado o deseada, visto, valorado, alimenta tu curiosidad. Que la otra persona reciba tu deseo sin juicio importa mucho en cómo te abres.",
+      "poder_consensuado": "Te da curiosidad la dinámica de guiar o dejarte guiar, siempre desde el acuerdo. Lo que hace que esto funcione no es el rol, es la confianza y el sí compartido detrás de él.",
+      "comunicacion": "La conversación es una de tus herramientas más fuertes. Hablar las cosas, ponerles palabras, preguntarte qué quieres, es parte central de cómo exploras y de cómo te sientes seguro o segura."
+    },
+    "limits_intro": "Estos son los temas que marcaste como límites firmes. No aparecen como sugerencias ni recomendaciones. Son tuyos, y están aquí para que queden claros y respetados."
   },
   "dimensions": {
     "visual": "Visual",

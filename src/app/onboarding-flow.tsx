@@ -54,6 +54,36 @@ const QUIZ_ANSWER_OPTIONS: AnswerOption[] = [
   "skip",
 ];
 
+const PROFILE_NARRATIVE_DIMENSIONS: Dimension[] = [
+  "visual",
+  "sensorial",
+  "emocional",
+  "fantasia_narrativa",
+  "novedad",
+  "validacion",
+  "poder_consensuado",
+  "comunicacion",
+];
+const PROMINENT_DIMENSION_THRESHOLD = 60;
+const MAX_PROMINENT_DIMENSIONS = 3;
+
+function getProminentDimensions(
+  dimensions: ScoreResult["dimensions"],
+): [Dimension, number][] {
+  const order = new Map(
+    PROFILE_NARRATIVE_DIMENSIONS.map((dimension, index) => [dimension, index]),
+  );
+
+  return (Object.entries(dimensions) as [Dimension, number][])
+    .filter(
+      ([dimension, score]) =>
+        PROFILE_NARRATIVE_DIMENSIONS.includes(dimension) &&
+        score >= PROMINENT_DIMENSION_THRESHOLD,
+    )
+    .sort((a, b) => b[1] - a[1] || (order.get(a[0]) ?? 0) - (order.get(b[0]) ?? 0))
+    .slice(0, MAX_PROMINENT_DIMENSIONS);
+}
+
 export function canAdvanceFromAge(isAdult: boolean) {
   return isAdult;
 }
@@ -554,6 +584,7 @@ function ResultsScreen({
     Dimension,
     number,
   ][];
+  const prominentDimensions = getProminentDimensions(result.dimensions);
 
   return (
     <main className="min-h-[calc(100dvh-88px)] bg-[#f5f7f2] px-5 py-10">
@@ -569,6 +600,32 @@ function ResultsScreen({
         <p className="mt-4 rounded-lg border border-[#d2ddd8] bg-white p-4 text-sm leading-6 text-[#46534e]">
           {t("results.disclaimer")}
         </p>
+
+        <section className="mt-8" aria-label={t("results.heading")}>
+          <p className="rounded-lg border border-[#c5d5cf] bg-[#eef8f5] p-4 text-base leading-7 text-[#27312d]">
+            {t("results.insight_intro")}
+          </p>
+          {prominentDimensions.length > 0 && (
+            <div className="mt-4 space-y-3">
+              {prominentDimensions.map(([dim, score]) => (
+                <article
+                  key={dim}
+                  className="rounded-lg border border-[#d2ddd8] bg-white p-4 shadow-sm"
+                >
+                  <div className="flex items-center justify-between gap-4 text-sm">
+                    <h2 className="font-semibold text-[#181610]">
+                      {t(`dimensions.${dim}`)}
+                    </h2>
+                    <span className="flex-shrink-0 text-[#46534e]">{score}/100</span>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-[#46534e]">
+                    {t(`results.profile.${dim}`)}
+                  </p>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
 
         <section className="mt-8" aria-labelledby="axes-heading">
           <h2
@@ -622,7 +679,7 @@ function ResultsScreen({
             {t("results.section_limits")}
           </h2>
           <p className="mt-1 text-sm text-[#46534e]">
-            {t("results.limits_explanation")}
+            {t("results.limits_intro")}
           </p>
           <div className="mt-3">
             {result.vetoedTopics.length === 0 ? (
