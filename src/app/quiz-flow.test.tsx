@@ -4,7 +4,7 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { loadQuestions } from "@/lib/questions";
+import { loadQuestions, loadQuickTasteQuestions } from "@/lib/questions";
 import { computeScore } from "@/lib/scoring";
 import type { Answer } from "@/lib/scoring";
 import OnboardingFlow from "./onboarding-flow";
@@ -88,9 +88,32 @@ describe("rule-1.3-quiz-answers-never-leave-client", () => {
     expect(existsSync(join(process.cwd(), "src", "app", "api"))).toBe(false);
   });
 
-  it("completing the quiz does not write quiz answers to localStorage", async () => {
+  it("completing Quick Taste does not write quiz answers to localStorage", async () => {
     const user = await moveToQuiz();
     await skipAllAndFinish(user);
+    const stored = { ...localStorage };
+    const quizKeys = Object.keys(stored).filter(
+      (k) => k !== "curio-lang",
+    );
+    expect(quizKeys).toHaveLength(0);
+  });
+  it("completing Quick Taste and the full quiz keeps quiz answers out of localStorage", async () => {
+    const user = await moveToQuiz();
+    await user.click(
+      screen.getByRole("radio", {
+        name: /me interesa explorarlo|i'd like to explore it/i,
+      }),
+    );
+    await skipAllAndFinish(user);
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /continuar con el quiz completo|continue with full quiz/i,
+      }),
+    );
+    await user.click(screen.getByRole("radio", { name: /firme|hard limit/i }));
+    await skipAllAndFinish(user);
+
     const stored = { ...localStorage };
     const quizKeys = Object.keys(stored).filter(
       (k) => k !== "curio-lang",
@@ -104,21 +127,102 @@ describe("rule-1.3-quiz-answers-never-leave-client", () => {
 // ---------------------------------------------------------------------------
 
 describe("quiz progress", () => {
-  it("shows question 1 of 60 on the first question", async () => {
+  it("shows question 1 of 10 on the first Quick Taste question", async () => {
     await moveToQuiz();
     expect(
       screen.getByRole("progressbar", { hidden: false }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/pregunta 1 de 60|question 1 of 60/i)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 1 de 10|question 1 of 10/i)).toBeInTheDocument();
   });
 
   it("advances the counter when moving to next question", async () => {
     const user = await moveToQuiz();
     await user.click(screen.getByRole("button", { name: /siguiente|next/i }));
-    expect(screen.getByText(/pregunta 2 de 60|question 2 of 60/i)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 2 de 10|question 2 of 10/i)).toBeInTheDocument();
   });
 });
 
+// ---------------------------------------------------------------------------
+// Quick Taste default flow
+// ---------------------------------------------------------------------------
+
+describe("Quick Taste default flow", () => {
+  it("loads the 10 Quick Taste questions by default", async () => {
+    await moveToQuiz();
+    const quickTasteQuestions = loadQuickTasteQuestions("es");
+
+    expect(quickTasteQuestions).toHaveLength(10);
+    expect(screen.getByText(quickTasteQuestions[0].text)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 1 de 10|question 1 of 10/i)).toBeInTheDocument();
+    expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuemax", "10");
+  });
+
+  it("shows the result after the 10 Quick Taste questions", async () => {
+    const user = await moveToQuiz();
+    await skipAllAndFinish(user);
+
+    expect(
+      screen.getByRole("heading", {
+        name: /tu perfil de curiosidad|your curiosity profile/i,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name: /continuar con el quiz completo|continue with full quiz/i,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Curio es una experiencia de curiosidad y conversaci|Curio is a curiosity and conversation experience for adults/i,
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("continues to the 50 remaining questions without repeating Quick Taste", async () => {
+    const user = await moveToQuiz();
+    const allQuestions = loadQuestions("es");
+    const quickTasteQuestions = loadQuickTasteQuestions("es");
+    const remainingQuestions = allQuestions.filter((question) => !question.quickTaste);
+
+    await user.click(
+      screen.getByRole("radio", {
+        name: /me interesa explorarlo|i'd like to explore it/i,
+      }),
+    );
+    await skipAllAndFinish(user);
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /continuar con el quiz completo|continue with full quiz/i,
+      }),
+    );
+
+    expect(remainingQuestions).toHaveLength(50);
+    expect(screen.getByText(/pregunta 1 de 50|question 1 of 50/i)).toBeInTheDocument();
+    expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuemax", "50");
+    expect(screen.getByText(remainingQuestions[0].text)).toBeInTheDocument();
+    expect(screen.queryByText(quickTasteQuestions[0].text)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("radio", { name: /firme|hard limit/i }));
+    await skipAllAndFinish(user);
+
+    const dimensionsSection = screen.getByRole("region", {
+      name: /dimensiones exploradas|explored dimensions/i,
+    });
+    expect(within(dimensionsSection).getByText(/novedad|novelty/i)).toBeInTheDocument();
+    expect(within(dimensionsSection).getByText("100/100")).toBeInTheDocument();
+
+    const limitsSection = screen.getByRole("region", {
+      name: /l.mites personales|personal limits/i,
+    });
+    expect(within(limitsSection).getAllByText(/l.mites|boundaries/i).length).toBeGreaterThan(0);
+    expect(
+      screen.queryByRole("button", {
+        name: /continuar con el quiz completo|continue with full quiz/i,
+      }),
+    ).not.toBeInTheDocument();
+  });
+});
 // ---------------------------------------------------------------------------
 // Skip — Regla 1.5 / AGENTS.md: "Prefiero no contestar no penaliza"
 // ---------------------------------------------------------------------------
@@ -389,12 +493,12 @@ describe("language-switch-mid-quiz-preserves-answers", () => {
   it("switching locale updates question text but keeps question index", async () => {
     const user = await moveToQuiz();
     await user.click(screen.getByRole("button", { name: /siguiente|next/i }));
-    expect(screen.getByText(/pregunta 2 de 60/i)).toBeInTheDocument();
+    expect(screen.getByText(/pregunta 2 de 10/i)).toBeInTheDocument();
 
     const langGroup = screen.getByRole("group", { name: /language|idioma/i });
     await user.click(within(langGroup).getByRole("button", { name: /^en$/i }));
 
-    expect(screen.getByText(/question 2 of 60/i)).toBeInTheDocument();
+    expect(screen.getByText(/question 2 of 10/i)).toBeInTheDocument();
   });
 });
 

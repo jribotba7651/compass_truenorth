@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { LangProvider, LanguageSelector, useI18n } from "@/lib/i18n";
-import { loadQuestions } from "@/lib/questions";
+import { loadQuestions, loadQuickTasteQuestions } from "@/lib/questions";
 import type { QuestionWithText } from "@/lib/questions";
 import {
   computeScore,
@@ -19,6 +19,8 @@ export type OnboardingStep =
   | "ready"
   | "quiz"
   | "results";
+
+type QuizMode = "quickTaste" | "full";
 
 type ConsentKey =
   | "adultEntertainment"
@@ -111,14 +113,26 @@ function OnboardingFlowInner() {
   const [isAdult, setIsAdult] = useState(false);
   const [consent, setConsent] = useState<ConsentState>(freshConsentState);
 
-  // Quiz state — lives only in React memory, never touches server or storage (Rule 1.3)
+  // Quiz state lives only in React memory, never touches server or storage (Rule 1.3)
   const [quizAnswers, setQuizAnswers] = useState<Record<string, AnswerOption>>(
     {},
   );
   const [quizIdx, setQuizIdx] = useState(0);
+  const [quizMode, setQuizMode] = useState<QuizMode>("quickTaste");
+  const [resultMode, setResultMode] = useState<QuizMode>("quickTaste");
   const [scoreResult, setScoreResult] = useState<ScoreResult | null>(null);
 
   const questions = useMemo(() => loadQuestions(locale), [locale]);
+  const quickTasteQuestions = useMemo(
+    () => loadQuickTasteQuestions(locale),
+    [locale],
+  );
+  const fullQuizQuestions = useMemo(
+    () => questions.filter((question) => !question.quickTaste),
+    [questions],
+  );
+  const activeQuestions =
+    quizMode === "quickTaste" ? quickTasteQuestions : fullQuizQuestions;
 
   function resetFlow() {
     setStep("landing");
@@ -126,6 +140,8 @@ function OnboardingFlowInner() {
     setConsent(freshConsentState());
     setQuizAnswers({});
     setQuizIdx(0);
+    setQuizMode("quickTaste");
+    setResultMode("quickTaste");
     setScoreResult(null);
   }
 
@@ -135,22 +151,39 @@ function OnboardingFlowInner() {
 
   function handleQuizPrevious() {
     if (quizIdx === 0) {
-      setStep("ready");
+      setStep(quizMode === "full" ? "results" : "ready");
     } else {
       setQuizIdx((i) => i - 1);
     }
   }
 
   function handleQuizNext() {
-    if (quizIdx < questions.length - 1) {
+    if (quizIdx < activeQuestions.length - 1) {
       setQuizIdx((i) => i + 1);
     } else {
       const answerList: Answer[] = Object.entries(quizAnswers).map(
         ([questionId, option]) => ({ questionId, option }),
       );
-      setScoreResult(computeScore(questions, answerList));
+      const scoringQuestions =
+        quizMode === "quickTaste" ? quickTasteQuestions : questions;
+      setScoreResult(computeScore(scoringQuestions, answerList));
+      setResultMode(quizMode);
       setStep("results");
     }
+  }
+
+  function startQuickTaste() {
+    setQuizMode("quickTaste");
+    setResultMode("quickTaste");
+    setScoreResult(null);
+    setQuizIdx(0);
+    setStep("quiz");
+  }
+
+  function continueFullQuiz() {
+    setQuizMode("full");
+    setQuizIdx(0);
+    setStep("quiz");
   }
 
   return (
@@ -179,17 +212,11 @@ function OnboardingFlowInner() {
         />
       )}
       {step === "ready" && (
-        <ReadyScreen
-          onStartQuiz={() => {
-            setQuizIdx(0);
-            setStep("quiz");
-          }}
-          onRestart={resetFlow}
-        />
+        <ReadyScreen onStartQuiz={startQuickTaste} onRestart={resetFlow} />
       )}
       {step === "quiz" && (
         <QuizScreen
-          questions={questions}
+          questions={activeQuestions}
           currentIdx={quizIdx}
           answers={quizAnswers}
           onAnswer={handleQuizAnswer}
@@ -198,7 +225,13 @@ function OnboardingFlowInner() {
         />
       )}
       {step === "results" && scoreResult && (
-        <ResultsScreen result={scoreResult} onRestart={resetFlow} />
+        <ResultsScreen
+          result={scoreResult}
+          onRestart={resetFlow}
+          onContinueFullQuiz={
+            resultMode === "quickTaste" ? continueFullQuiz : undefined
+          }
+        />
       )}
       <SiteFooter onReset={resetFlow} />
     </div>
@@ -575,9 +608,11 @@ function QuizScreen({
 function ResultsScreen({
   result,
   onRestart,
+  onContinueFullQuiz,
 }: {
   result: ScoreResult;
   onRestart: () => void;
+  onContinueFullQuiz?: () => void;
 }) {
   const { t } = useI18n();
   const dimensionEntries = Object.entries(result.dimensions) as [
@@ -700,13 +735,24 @@ function ResultsScreen({
           </div>
         </section>
 
-        <button
-          type="button"
-          onClick={onRestart}
-          className="mt-10 inline-flex min-h-11 items-center justify-center rounded-lg bg-[#181610] px-5 text-sm font-semibold text-white transition hover:bg-[#2e2a22] focus:outline-none focus:ring-2 focus:ring-[#181610] focus:ring-offset-2"
-        >
-          {t("results.restart")}
-        </button>
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+          {onContinueFullQuiz && (
+            <button
+              type="button"
+              onClick={onContinueFullQuiz}
+              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#0f766e] px-5 text-sm font-semibold text-white transition hover:bg-[#0d625c] focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:ring-offset-2"
+            >
+              {t("results.continue_full")}
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={onRestart}
+            className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#181610] px-5 text-sm font-semibold text-white transition hover:bg-[#2e2a22] focus:outline-none focus:ring-2 focus:ring-[#181610] focus:ring-offset-2"
+          >
+            {t("results.restart")}
+          </button>
+        </div>
       </div>
     </main>
   );
