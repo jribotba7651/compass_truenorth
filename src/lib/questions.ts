@@ -12,6 +12,7 @@ export interface QuestionWithText {
   topic: string;
   polarity: "normal" | "inverse";
   riskLevel: "Low" | "Medium" | "High";
+  quickTaste: boolean;
 }
 
 type ScoringEntry = {
@@ -20,6 +21,7 @@ type ScoringEntry = {
   topic: string;
   polarity: string;
   riskLevel?: string;
+  quickTaste: boolean;
 };
 
 const scoringById = scoringData.questions as Record<string, ScoringEntry>;
@@ -48,7 +50,14 @@ export function loadQuestions(locale: Locale): QuestionWithText[] {
         topic: sc.topic,
         polarity: sc.polarity as "normal" | "inverse",
         riskLevel: (sc.riskLevel ?? "Low") as "Low" | "Medium" | "High",
+        quickTaste: sc.quickTaste,
       },
     ];
   });
+}
+
+export function loadQuickTasteQuestions(locale: Locale): QuestionWithText[] {
+  return loadQuestions(locale)
+    .filter((question) => question.quickTaste)
+    .sort((a, b) => a.id.localeCompare(b.id));
 }
