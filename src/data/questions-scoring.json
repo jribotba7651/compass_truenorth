@@ -27,7 +27,8 @@
       "dimension": "novedad",
       "topic": "novedad",
       "polarity": "normal",
-      "note": "Apertura a novedad intima. Ancla la dimension novedad."
+      "note": "Apertura a novedad intima. Ancla la dimension novedad.",
+      "quickTaste": true
     },
     "Q002": {
       "verified": true,
@@ -35,7 +36,8 @@
       "dimension": "emocional",
       "topic": "confianza",
       "polarity": "normal",
-      "note": "Alta respuesta sube Emocional y Comunicacion."
+      "note": "Alta respuesta sube Emocional y Comunicacion.",
+      "quickTaste": true
     },
     "Q003": {
       "verified": true,
@@ -43,7 +45,8 @@
       "dimension": "comunicacion",
       "topic": "comunicacion",
       "polarity": "normal",
-      "note": "Estilo de procesamiento: hablar vs descubrir. Ancla la dimension comunicacion."
+      "note": "Estilo de procesamiento: hablar vs descubrir. Ancla la dimension comunicacion.",
+      "quickTaste": true
     },
     "Q004": {
       "verified": true,
@@ -51,7 +54,8 @@
       "dimension": null,
       "topic": "limites",
       "polarity": "normal",
-      "note": "Comodidad diciendo no. Informa gradualidad y defaults. No entra al calculo de las 8 dimensiones."
+      "note": "Comodidad diciendo no. Informa gradualidad y defaults. No entra al calculo de las 8 dimensiones.",
+      "quickTaste": false
     },
     "Q005": {
       "verified": true,
@@ -59,7 +63,8 @@
       "dimension": "sensorial",
       "topic": "ambiente",
       "polarity": "normal",
-      "note": "Sensorial via ambiente. Contribuye a la dimension sensorial."
+      "note": "Sensorial via ambiente. Contribuye a la dimension sensorial.",
+      "quickTaste": true
     },
     "Q006": {
       "verified": true,
@@ -67,7 +72,8 @@
       "dimension": "visual",
       "topic": "visual",
       "polarity": "normal",
-      "note": "Respuesta a estimulos visuales. Ancla la dimension visual."
+      "note": "Respuesta a estimulos visuales. Ancla la dimension visual.",
+      "quickTaste": true
     },
     "Q007": {
       "verified": true,
@@ -75,7 +81,8 @@
       "dimension": "sensorial",
       "topic": "tacto",
       "polarity": "normal",
-      "note": "Sensorial via tacto y cercania fisica."
+      "note": "Sensorial via tacto y cercania fisica.",
+      "quickTaste": false
     },
     "Q008": {
       "verified": true,
@@ -83,7 +90,8 @@
       "dimension": "novedad",
       "topic": "espontaneidad",
       "polarity": "normal",
-      "note": "Preferencia espontaneidad vs planeacion. Sub-eje de la dimension novedad."
+      "note": "Preferencia espontaneidad vs planeacion. Sub-eje de la dimension novedad.",
+      "quickTaste": false
     },
     "Q009": {
       "verified": true,
@@ -91,7 +99,8 @@
       "dimension": "validacion",
       "topic": "validacion",
       "polarity": "normal",
-      "note": "Importancia de sentirse deseado. Ancla la dimension validacion."
+      "note": "Importancia de sentirse deseado. Ancla la dimension validacion.",
+      "quickTaste": true
     },
     "Q010": {
       "verified": true,
@@ -99,7 +108,8 @@
       "dimension": "comunicacion",
       "topic": "fantasia_sin_accion",
       "polarity": "normal",
-      "note": "Comodidad hablando de fantasia sin compromiso de actuar. Regla 1.5: fantasia nunca suma intencion."
+      "note": "Comodidad hablando de fantasia sin compromiso de actuar. Regla 1.5: fantasia nunca suma intencion.",
+      "quickTaste": true
     },
     "Q011": {
       "verified": true,
@@ -108,7 +118,8 @@
       "topic": "fantasia_narrativa",
       "polarity": "normal",
       "riskLevel": "Medium",
-      "note": "Explora fantasia como historia, escena o juego imaginado. Contribuye a fantasia narrativa."
+      "note": "Explora fantasia como historia, escena o juego imaginado. Contribuye a fantasia narrativa.",
+      "quickTaste": true
     },
     "Q012": {
       "verified": true,
@@ -117,7 +128,8 @@
       "topic": "juego",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Apertura a juego y version ludica de si mismo/a dentro de fantasia narrativa."
+      "note": "Apertura a juego y version ludica de si mismo/a dentro de fantasia narrativa.",
+      "quickTaste": false
     },
     "Q013": {
       "verified": true,
@@ -126,7 +138,8 @@
       "topic": "cuidado",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Importancia de ternura y cuidado posterior. Contribuye a la dimension emocional."
+      "note": "Importancia de ternura y cuidado posterior. Contribuye a la dimension emocional.",
+      "quickTaste": false
     },
     "Q014": {
       "verified": true,
@@ -135,7 +148,8 @@
       "topic": "poder_consensuado",
       "polarity": "normal",
       "riskLevel": "Medium",
-      "note": "Sube Poder consensuado solo si no hay limite firme en el tema."
+      "note": "Sube Poder consensuado solo si no hay limite firme en el tema.",
+      "quickTaste": true
     },
     "Q015": {
       "verified": true,
@@ -144,7 +158,8 @@
       "topic": "limites",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Acuerdo para pausar una experiencia. Informa seguridad y gradualidad, no perfil."
+      "note": "Acuerdo para pausar una experiencia. Informa seguridad y gradualidad, no perfil.",
+      "quickTaste": false
     },
     "Q016": {
       "verified": true,
@@ -153,7 +168,8 @@
       "topic": "privacidad",
       "polarity": "inverse",
       "riskLevel": "Low",
-      "note": "Reserva personal. Restringe sharing por defecto. No puntua dimension."
+      "note": "Reserva personal. Restringe sharing por defecto. No puntua dimension.",
+      "quickTaste": false
     },
     "Q017": {
       "verified": true,
@@ -162,7 +178,8 @@
       "topic": "privacidad",
       "polarity": "inverse",
       "riskLevel": "Low",
-      "note": "Activa private-by-default en modo pareja. No puntua dimension."
+      "note": "Activa private-by-default en modo pareja. No puntua dimension.",
+      "quickTaste": false
     },
     "Q018": {
       "verified": true,
@@ -171,7 +188,8 @@
       "topic": "compartir_control",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Comodidad compartiendo con control explicito. Contribuye a comunicacion."
+      "note": "Comodidad compartiendo con control explicito. Contribuye a comunicacion.",
+      "quickTaste": false
     },
     "Q019": {
       "verified": true,
@@ -180,7 +198,8 @@
       "topic": "sugerencias",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Preferencia de producto para sugerencias sin revelar detalles privados. No puntua dimension."
+      "note": "Preferencia de producto para sugerencias sin revelar detalles privados. No puntua dimension.",
+      "quickTaste": false
     },
     "Q020": {
       "verified": true,
@@ -189,7 +208,8 @@
       "topic": "coincidencias",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Utilidad de coincidencias de curiosidad en pareja. Contribuye a comunicacion."
+      "note": "Utilidad de coincidencias de curiosidad en pareja. Contribuye a comunicacion.",
+      "quickTaste": false
     },
     "Q021": {
       "verified": true,
@@ -198,7 +218,8 @@
       "topic": "limites",
       "polarity": "normal",
       "riskLevel": "Medium",
-      "note": "Comodidad ante una curiosidad no compartida de la pareja. Informa limites y seguridad, no perfil."
+      "note": "Comodidad ante una curiosidad no compartida de la pareja. Informa limites y seguridad, no perfil.",
+      "quickTaste": false
     },
     "Q022": {
       "verified": true,
@@ -207,7 +228,8 @@
       "topic": "desacuerdo",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Apertura a entender desacuerdos con calma. Contribuye a comunicacion."
+      "note": "Apertura a entender desacuerdos con calma. Contribuye a comunicacion.",
+      "quickTaste": false
     },
     "Q023": {
       "verified": true,
@@ -216,7 +238,8 @@
       "topic": "gradualidad",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Preferencia por inicio suave y gradual. Contribuye a emocional."
+      "note": "Preferencia por inicio suave y gradual. Contribuye a emocional.",
+      "quickTaste": false
     },
     "Q024": {
       "verified": true,
@@ -225,7 +248,8 @@
       "topic": "enfoque_resultado",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Preferencia de producto sobre enfocar zonas comunes antes que diferencias. No puntua dimension."
+      "note": "Preferencia de producto sobre enfocar zonas comunes antes que diferencias. No puntua dimension.",
+      "quickTaste": false
     },
     "Q025": {
       "verified": true,
@@ -234,7 +258,8 @@
       "topic": "limites",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Importancia de marcar limites firmes como no negociables. Informa seguridad, no perfil."
+      "note": "Importancia de marcar limites firmes como no negociables. Informa seguridad, no perfil.",
+      "quickTaste": false
     },
     "Q026": {
       "verified": true,
@@ -243,7 +268,8 @@
       "topic": "fantasia_sin_accion",
       "polarity": "normal",
       "riskLevel": "Medium",
-      "note": "Curiosidad solo en imaginacion sin intencion practica. Regla 1.5: fantasia no suma intencion practica."
+      "note": "Curiosidad solo en imaginacion sin intencion practica. Regla 1.5: fantasia no suma intencion practica.",
+      "quickTaste": true
     },
     "Q027": {
       "verified": true,
@@ -252,7 +278,8 @@
       "topic": "espacio_privado",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Preferencia por ordenar curiosidades en privado antes de hablarlas. No puntua dimension."
+      "note": "Preferencia por ordenar curiosidades en privado antes de hablarlas. No puntua dimension.",
+      "quickTaste": false
     },
     "Q028": {
       "verified": true,
@@ -261,7 +288,8 @@
       "topic": "limites",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Claridad entre curiosidad e intencion de probar. Informa seguridad y separacion conceptual, no perfil."
+      "note": "Claridad entre curiosidad e intencion de probar. Informa seguridad y separacion conceptual, no perfil.",
+      "quickTaste": false
     },
     "Q029": {
       "verified": true,
@@ -270,7 +298,8 @@
       "topic": "escrito",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Comodidad explorando temas por escrito antes de hablarlos. Contribuye a comunicacion."
+      "note": "Comodidad explorando temas por escrito antes de hablarlos. Contribuye a comunicacion.",
+      "quickTaste": false
     },
     "Q030": {
       "verified": true,
@@ -279,217 +308,248 @@
       "topic": "validacion",
       "polarity": "normal",
       "riskLevel": "Low",
-      "note": "Importancia de validacion sin burla ni juicio. Contribuye a validacion."
+      "note": "Importancia de validacion sin burla ni juicio. Contribuye a validacion.",
+      "quickTaste": false
     },
     "Q031": {
       "layer": "dimension",
       "dimension": "validacion",
       "topic": "validacion",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q032": {
       "layer": "dimension",
       "dimension": "visual",
       "topic": "estetica",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q033": {
       "layer": "dimension",
       "dimension": "sensorial",
       "topic": "sonido",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q034": {
       "layer": "dimension",
       "dimension": "comunicacion",
       "topic": "directo",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q035": {
       "layer": "dimension",
       "dimension": "comunicacion",
       "topic": "pedir",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q036": {
       "layer": "dimension",
       "dimension": "novedad",
       "topic": "sorpresa",
       "polarity": "normal",
-      "riskLevel": "Medium"
+      "riskLevel": "Medium",
+      "quickTaste": false
     },
     "Q037": {
       "layer": "safety",
       "dimension": null,
       "topic": "control_pausa",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q038": {
       "layer": "dimension",
       "dimension": "comunicacion",
       "topic": "aftercare",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q039": {
       "layer": "meta",
       "dimension": null,
       "topic": "orientacion",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q040": {
       "layer": "meta",
       "dimension": null,
       "topic": "orientacion",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q041": {
       "layer": "meta",
       "dimension": null,
       "topic": "orientacion",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q042": {
       "layer": "meta",
       "dimension": null,
       "topic": "orientacion",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q043": {
       "layer": "meta",
       "dimension": null,
       "topic": "orientacion",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q044": {
       "layer": "meta",
       "dimension": null,
       "topic": "privacidad",
       "polarity": "inverse",
-      "riskLevel": "Medium"
+      "riskLevel": "Medium",
+      "quickTaste": false
     },
     "Q045": {
       "layer": "meta",
       "dimension": null,
       "topic": "lenguaje",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q046": {
       "layer": "meta",
       "dimension": null,
       "topic": "formato_quiz",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q047": {
       "layer": "meta",
       "dimension": null,
       "topic": "skip",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q048": {
       "layer": "meta",
       "dimension": null,
       "topic": "ideas_conversacion",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q049": {
       "layer": "dimension",
       "dimension": "comunicacion",
       "topic": "vocabulario",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q050": {
       "layer": "meta",
       "dimension": null,
       "topic": "lenguaje_resultado",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q051": {
       "layer": "dimension",
       "dimension": "emocional",
       "topic": "ritmo",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q052": {
       "layer": "safety",
       "dimension": null,
       "topic": "anti_coercion",
       "polarity": "normal",
-      "riskLevel": "Medium"
+      "riskLevel": "Medium",
+      "quickTaste": false
     },
     "Q053": {
       "layer": "meta",
       "dimension": null,
       "topic": "frases_conversacion",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q054": {
       "layer": "meta",
       "dimension": null,
       "topic": "privacidad_pareja",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q055": {
       "layer": "meta",
       "dimension": null,
       "topic": "privacidad_pareja",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q056": {
       "layer": "dimension",
       "dimension": "novedad",
       "topic": "coincidencias",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q057": {
       "layer": "safety",
       "dimension": null,
       "topic": "limites",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q058": {
       "layer": "dimension",
       "dimension": "emocional",
       "topic": "ligereza",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     },
     "Q059": {
       "layer": "safety",
       "dimension": null,
       "topic": "distinguir_deseo",
       "polarity": "normal",
-      "riskLevel": "Medium"
+      "riskLevel": "Medium",
+      "quickTaste": false
     },
     "Q060": {
       "layer": "meta",
       "dimension": null,
       "topic": "formato_reporte",
       "polarity": "normal",
-      "riskLevel": "Low"
+      "riskLevel": "Low",
+      "quickTaste": false
     }
   }
 }

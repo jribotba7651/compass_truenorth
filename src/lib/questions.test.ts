@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import enQuestions from "@/locales/en/questions.json";
 import esQuestions from "@/locales/es/questions.json";
 import scoringData from "@/data/questions-scoring.json";
-import { loadQuestions } from "@/lib/questions";
+import { loadQuestions, loadQuickTasteQuestions } from "@/lib/questions";
 import { computeScore } from "@/lib/scoring";
 import type { Answer } from "@/lib/scoring";
 
@@ -22,6 +22,7 @@ type ScoringForTest = Record<
     topic: string;
     polarity: string;
     riskLevel?: string;
+    quickTaste: boolean;
   }
 >;
 
@@ -38,6 +39,28 @@ const safetyIds = [
   "Q059",
 ];
 const orientationIds = ["Q039", "Q040", "Q041", "Q042", "Q043"];
+const quickTasteIds = [
+  "Q001",
+  "Q002",
+  "Q003",
+  "Q005",
+  "Q006",
+  "Q009",
+  "Q010",
+  "Q011",
+  "Q014",
+  "Q026",
+];
+const expectedQuickTasteDimensions = [
+  "comunicacion",
+  "emocional",
+  "fantasia_narrativa",
+  "novedad",
+  "poder_consensuado",
+  "sensorial",
+  "validacion",
+  "visual",
+];
 
 describe("questions data integrity", () => {
   it("es/questions.json, en/questions.json, and questions-scoring.json expose exactly Q001-Q060", () => {
@@ -128,6 +151,24 @@ describe("questions data integrity", () => {
     }
   });
 
+  it("marks exactly 10 questions as Quick Taste and all others false", () => {
+    const marked = expectedIds.filter((id) => scoring[id].quickTaste);
+    expect(marked).toEqual(quickTasteIds);
+
+    for (const id of expectedIds) {
+      expect(scoring[id].quickTaste).toBe(quickTasteIds.includes(id));
+    }
+  });
+
+  it("Quick Taste questions cover the expected profile dimensions", () => {
+    const dimensions = [...new Set(quickTasteIds.map((id) => scoring[id].dimension))].sort();
+    expect(dimensions).toEqual(expectedQuickTasteDimensions);
+
+    for (const id of quickTasteIds) {
+      expect(scoring[id].layer).toBe("dimension");
+    }
+  });
+
   it("no question text is empty or missing in either locale", () => {
     for (const [id, text] of Object.entries(esQuestions.questions)) {
       expect(text, "ES text missing for " + id).toBeTruthy();
@@ -154,6 +195,18 @@ describe("loadQuestions join function", () => {
     expect(sortIds(resultIds)).toEqual(expectedIds);
   });
 
+  it("loadQuickTasteQuestions returns the 10 marked questions in id order", () => {
+    const en = loadQuickTasteQuestions("en");
+    const es = loadQuickTasteQuestions("es");
+
+    expect(en).toHaveLength(10);
+    expect(es).toHaveLength(10);
+    expect(en.map((question) => question.id)).toEqual(quickTasteIds);
+    expect(es.map((question) => question.id)).toEqual(quickTasteIds);
+    expect(en.every((question) => question.quickTaste)).toBe(true);
+    expect(es.every((question) => question.quickTaste)).toBe(true);
+  });
+
   it("EN and ES results have identical ids and scoring fields", () => {
     const en = loadQuestions("en");
     const es = loadQuestions("es");
@@ -163,6 +216,7 @@ describe("loadQuestions join function", () => {
       expect(en[i].dimension).toBe(es[i].dimension);
       expect(en[i].topic).toBe(es[i].topic);
       expect(en[i].polarity).toBe(es[i].polarity);
+      expect(en[i].quickTaste).toBe(es[i].quickTaste);
     }
   });
 
@@ -222,6 +276,7 @@ describe("loadQuestions join function", () => {
       expect(q.dimension).toBe(match.dimension);
       expect(q.polarity).toBe(match.polarity);
       expect(q.topic).toBe(match.topic);
+      expect(q.quickTaste).toBe(match.quickTaste);
     }
   });
 });
